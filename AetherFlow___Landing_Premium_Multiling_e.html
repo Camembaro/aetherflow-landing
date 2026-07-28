@@ -1,0 +1,1472 @@
+
+<!DOCTYPE html>
+<html lang="es" dir="ltr" data-lang="es">
+<head><base href="https://d16ilfvy4mv02r.cloudfront.net/workspaces/wo1v4KSKcGQBIfu8srVRELyONmDJ8qEM/5138c29b-7cac-4238-b257-8f3166ae767d/files/">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="AetherFlow — Automatización IA universal. Paga por uso, en cualquier idioma, desde cualquier lugar. Premium, seguro y veloz." />
+<meta name="theme-color" content="#0A0E27" />
+<title>AetherFlow — Automatización IA Universal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%23A855F7'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='42' fill='url(%23a)'/%3E%3Cpath d='M30 65 L50 30 L70 65 Z' fill='white' opacity='.95'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/" defer></script>
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#06081F;
+  color:#E6E8F2;
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font:inherit;color:inherit}
+
+/* ========== ANIMATED BACKGROUND ========== */
+.bgfx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.bgfx::before{
+  content:'';position:absolute;inset:-30%;
+  background:
+    radial-gradient(800px 600px at 15% 20%, rgba(168,85,247,.35), transparent 60%),
+    radial-gradient(700px 500px at 85% 15%, rgba(6,182,212,.30), transparent 60%),
+    radial-gradient(600px 600px at 50% 80%, rgba(236,72,153,.25), transparent 65%);
+  filter:blur(20px);
+  animation:drift 24s ease-in-out infinite alternate;
+}
+.bgfx::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
+}
+@keyframes drift{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-3%,2%) scale(1.06)}
+  100%{transform:translate(2%,-2%) scale(1)}
+}
+
+/* ========== LAYOUT ========== */
+.container{max-width:1240px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+section{padding:96px 0;position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:99px;
+  background:rgba(168,85,247,.10);
+  border:1px solid rgba(168,85,247,.30);
+  color:#C4B5FD;font-size:13px;font-weight:500;letter-spacing:.5px;
+  text-transform:uppercase;backdrop-filter:blur(8px);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#A855F7;box-shadow:0 0 8px #A855F7;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.4;transform:scale(1.4)}}
+
+/* ========== NAV ========== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(16px) saturate(180%);
+  background:rgba(6,8,31,.65);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
+.brand-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#A855F7,#06B6D4);
+  display:grid;place-items:center;
+  box-shadow:0 8px 24px -8px rgba(168,85,247,.6);
+}
+.brand-mark svg{width:20px;height:20px;fill:#fff}
+.brand b{background:linear-gradient(90deg,#fff,#C4B5FD);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.3px}
+
+.nav-links{display:flex;align-items:center;gap:8px}
+.nav-links a{
+  padding:8px 16px;border-radius:8px;
+  font-size:14px;font-weight:500;color:#9CA3BF;
+  transition:all .2s;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.05)}
+.lang-switch{
+  position:relative;margin-left:8px;
+}
+.lang-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 12px;border-radius:8px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  font-size:13px;font-weight:500;color:#E6E8F2;
+  transition:all .2s;
+}
+.lang-btn:hover{background:rgba(255,255,255,.10)}
+.lang-btn .globe{width:14px;height:14px;opacity:.7}
+.lang-menu{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:rgba(15,18,46,.95);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.10);border-radius:12px;
+  padding:6px;min-width:200px;
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:all .2s;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);
+}
+.lang-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.lang-menu button{
+  display:flex;align-items:center;gap:10px;width:100%;
+  padding:10px 12px;border-radius:8px;
+  font-size:13px;text-align:left;color:#E6E8F2;
+  transition:background .15s;
+}
+.lang-menu button:hover{background:rgba(168,85,247,.15)}
+.lang-menu button.active{background:rgba(168,85,247,.20);color:#fff}
+.lang-menu .flag{font-size:18px}
+
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 22px;border-radius:10px;
+  font-weight:600;font-size:14px;
+  background:linear-gradient(135deg,#A855F7,#7C3AED);
+  color:#fff;
+  box-shadow:0 8px 24px -6px rgba(168,85,247,.5);
+  transition:all .2s;
+}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 14px 32px -6px rgba(168,85,247,.7)}
+.cta-btn.ghost{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:none;
+}
+.cta-btn.ghost:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+
+/* ========== HERO ========== */
+.hero{padding:120px 0 80px;text-align:center;position:relative}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(40px,7vw,84px);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-2.5px;
+  margin:24px auto 24px;
+  max-width:900px;
+}
+.hero h1 .grad{
+  background:linear-gradient(90deg,#A855F7 0%,#06B6D4 50%,#EC4899 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200%;animation:shift 8s linear infinite;
+}
+@keyframes shift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.hero p.lead{
+  font-size:clamp(16px,1.5vw,20px);
+  color:#9CA3BF;max-width:680px;margin:0 auto 40px;
+}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  max-width:780px;margin:0 auto;padding:24px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;backdrop-filter:blur(10px);
+}
+.hero-stat .v{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:32px;font-weight:700;
+  background:linear-gradient(90deg,#fff,#A855F7);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-stat .l{font-size:13px;color:#9CA3BF;margin-top:4px}
+
+/* ========== TRUST BAR ========== */
+.trust{padding:40px 0 60px;text-align:center}
+.trust-label{font-size:13px;color:#6B7280;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+.trust-logos{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:48px;
+  opacity:.55;
+}
+.trust-logos span{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:20px;letter-spacing:1px;color:#9CA3BF;
+}
+
+/* ========== SECTION HEADERS ========== */
+.section-head{text-align:center;max-width:720px;margin:0 auto 56px}
+.section-head h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(30px,4vw,48px);font-weight:700;letter-spacing:-1.5px;
+  margin:16px 0 16px;line-height:1.15;
+}
+.section-head p{color:#9CA3BF;font-size:18px}
+
+/* ========== FEATURES ========== */
+.features-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+}
+.feature{
+  padding:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.02) 100%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  backdrop-filter:blur(10px);
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.feature::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(168,85,247,.10),transparent);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.feature:hover{transform:translateY(-4px);border-color:rgba(168,85,247,.35)}
+.feature:hover::before{opacity:1}
+.feature .ico{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(6,182,212,.25));
+  border:1px solid rgba(255,255,255,.10);
+  display:grid;place-items:center;
+  font-size:24px;margin-bottom:16px;
+}
+.feature h3{font-size:17px;font-weight:600;margin-bottom:8px;letter-spacing:-.2px}
+.feature p{font-size:14px;color:#9CA3BF}
+
+/* ========== HOW IT WORKS ========== */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}
+.step{
+  text-align:center;padding:32px 24px;position:relative;
+}
+.step-num{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 24px;
+  background:linear-gradient(135deg,#A855F7,#06B6D4);
+  display:grid;place-items:center;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:24px;font-weight:700;color:#fff;
+  box-shadow:0 12px 36px -8px rgba(168,85,247,.6);
+  position:relative;
+}
+.step-num::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(168,85,247,.30);
+}
+.step h3{font-size:20px;font-weight:600;margin-bottom:10px;letter-spacing:-.3px}
+.step p{font-size:15px;color:#9CA3BF;max-width:280px;margin:0 auto}
+
+/* ========== PRICING ========== */
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.price-card{
+  padding:32px 28px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;backdrop-filter:blur(10px);
+  position:relative;transition:all .3s;
+  display:flex;flex-direction:column;
+}
+.price-card:hover{transform:translateY(-4px);border-color:rgba(168,85,247,.30)}
+.price-card.popular{
+  background:linear-gradient(180deg,rgba(168,85,247,.12) 0%,rgba(6,182,212,.06) 100%);
+  border:1px solid rgba(168,85,247,.45);
+  transform:scale(1.04);
+}
+.price-card.popular:hover{transform:scale(1.04) translateY(-4px)}
+.popular-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  padding:5px 14px;border-radius:99px;
+  background:linear-gradient(135deg,#A855F7,#EC4899);
+  color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  box-shadow:0 8px 20px -4px rgba(168,85,247,.6);
+}
+.price-name{font-size:14px;color:#9CA3BF;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:8px}
+.price-credits{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:42px;font-weight:700;letter-spacing:-1.5px;
+  background:linear-gradient(90deg,#fff,#C4B5FD);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.price-credits small{font-size:14px;color:#9CA3BF;display:block;font-weight:400;letter-spacing:0;-webkit-text-fill-color:#9CA3BF}
+.price-bundle{font-size:36px;font-weight:700;margin:14px 0 4px}
+.price-bundle .cur{font-size:18px;color:#9CA3BF;font-weight:500;vertical-align:super;margin-right:2px}
+.price-bundle .per{font-size:13px;color:#6B7280;font-weight:400;display:block;margin-top:2px}
+.price-save{display:inline-block;margin-top:8px;padding:4px 10px;border-radius:6px;background:rgba(34,197,94,.12);color:#34D399;font-size:12px;font-weight:600}
+.price-desc{font-size:14px;color:#9CA3BF;margin:18px 0 22px;flex:1}
+.price-card .cta-btn{width:100%;justify-content:center}
+.price-feat{font-size:13px;color:#9CA3BF;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.price-feat::before{content:'✓';color:#34D399;font-weight:700}
+.equiv{font-size:11px;color:#6B7280;margin-top:10px;text-align:center;font-style:italic}
+
+/* ========== USE CASES ========== */
+.tabs{
+  display:flex;justify-content:center;gap:8px;
+  padding:6px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;max-width:760px;margin:0 auto 36px;
+  flex-wrap:wrap;
+}
+.tab{
+  padding:10px 18px;border-radius:10px;
+  font-size:14px;font-weight:500;color:#9CA3BF;
+  transition:all .2s;white-space:nowrap;
+}
+.tab:hover{color:#fff}
+.tab.active{
+  background:linear-gradient(135deg,#A855F7,#7C3AED);
+  color:#fff;box-shadow:0 6px 16px -4px rgba(168,85,247,.5);
+}
+.use-case-card{
+  padding:48px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;backdrop-filter:blur(10px);
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+}
+.use-case-emoji{font-size:64px;margin-bottom:16px}
+.use-case-card h3{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;margin-bottom:14px;letter-spacing:-.5px}
+.use-case-card p{color:#9CA3BF;font-size:16px;margin-bottom:20px}
+.use-case-card ul{list-style:none}
+.use-case-card ul li{padding:8px 0;font-size:15px;color:#E6E8F2;display:flex;align-items:center;gap:10px}
+.use-case-card ul li::before{content:'✦';color:#A855F7;font-size:18px}
+
+/* ========== SECURITY ========== */
+.security-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.sec{
+  padding:32px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);border-radius:18px;
+  text-align:center;backdrop-filter:blur(10px);
+  transition:all .3s;
+}
+.sec:hover{border-color:rgba(6,182,212,.30);transform:translateY(-3px)}
+.sec .ico{width:64px;height:64px;border-radius:16px;margin:0 auto 16px;background:linear-gradient(135deg,#06B6D4,#0EA5E9);display:grid;place-items:center;font-size:28px;box-shadow:0 8px 24px -8px rgba(6,182,212,.5)}
+.sec h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.sec p{font-size:14px;color:#9CA3BF}
+
+/* ========== FAQ ========== */
+.faq-list{max-width:780px;margin:0 auto}
+.faq{
+  padding:24px 28px;margin-bottom:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);border-radius:14px;
+  cursor:pointer;transition:all .2s;
+}
+.faq:hover{border-color:rgba(168,85,247,.30)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.faq-q h3{font-size:17px;font-weight:600;letter-spacing:-.2px}
+.faq-q .chev{transition:transform .3s;color:#A855F7;font-size:20px;flex-shrink:0}
+.faq.open .chev{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:#9CA3BF;font-size:15px;line-height:1.7}
+.faq.open .faq-a{max-height:300px;margin-top:14px}
+
+/* ========== CTA FINAL ========== */
+.final-cta{
+  text-align:center;padding:80px 48px;
+  background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(6,182,212,.10));
+  border:1px solid rgba(168,85,247,.30);border-radius:32px;
+  position:relative;overflow:hidden;
+}
+.final-cta::before{
+  content:'';position:absolute;inset:-50%;
+  background:radial-gradient(circle,rgba(168,85,247,.20),transparent 60%);
+  animation:drift 12s ease-in-out infinite alternate;
+}
+.final-cta>*{position:relative;z-index:1}
+.final-cta h2{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(30px,5vw,52px);font-weight:700;letter-spacing:-1.5px;margin-bottom:18px;
+}
+.final-cta p{color:#C4B5FD;font-size:18px;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
+
+/* ========== FOOTER ========== */
+footer{padding:64px 0 32px;border-top:1px solid rgba(255,255,255,.06);background:rgba(6,8,31,.50)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.foot-brand p{color:#9CA3BF;font-size:14px;margin-top:16px;max-width:340px;line-height:1.7}
+.foot-col h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#fff;font-weight:600;margin-bottom:16px}
+.foot-col ul{list-style:none}
+.foot-col ul li{margin-bottom:10px;font-size:14px}
+.foot-col ul li a{color:#9CA3BF;transition:color .2s}
+.foot-col ul li a:hover{color:#fff}
+.foot-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.06);
+  font-size:13px;color:#6B7280;flex-wrap:wrap;gap:12px;
+}
+.payments{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.payments span{
+  padding:5px 10px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);border-radius:6px;
+  font-size:11px;font-weight:600;color:#9CA3BF;
+}
+
+/* ========== MOBILE NAV ========== */
+.menu-btn{display:none}
+@media (max-width:920px){
+  .nav-links a:not(.cta-btn){display:none}
+  .menu-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.05)}
+}
+@media (max-width:760px){
+  section{padding:64px 0}
+  .hero{padding:80px 0 48px}
+  .features-grid,.pricing-grid{grid-template-columns:1fr 1fr}
+  .security-grid,.steps{grid-template-columns:1fr}
+  .use-case-card{grid-template-columns:1fr;padding:32px 24px;gap:24px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .final-cta{padding:48px 24px}
+  .price-card.popular{transform:none}
+}
+@media (max-width:480px){
+  .features-grid,.pricing-grid,.foot-grid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .cta-btn{justify-content:center}
+}
+
+/* ========== TOAST / MODAL ========== */
+.toast{
+  position:fixed;bottom:30px;right:30px;z-index:100;
+  padding:14px 20px;border-radius:12px;
+  background:rgba(15,18,46,.95);backdrop-filter:blur(16px);
+  border:1px solid rgba(168,85,247,.40);
+  color:#fff;font-size:14px;font-weight:500;
+  box-shadow:0 20px 40px -10px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(20px);
+  transition:all .3s;max-width:340px;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.success{border-color:rgba(34,197,94,.50)}
+.toast.info{border-color:rgba(6,182,212,.50)}
+
+.modal-bg{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:24px;
+}
+.modal-bg.open{display:flex;animation:in .2s}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.modal{
+  max-width:480px;width:100%;
+  background:linear-gradient(180deg,#0F122E,#0A0E27);
+  border:1px solid rgba(168,85,247,.30);border-radius:20px;
+  padding:36px;text-align:center;
+  animation:slideIn .3s;
+}
+@keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h3{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin-bottom:12px}
+.modal p{color:#9CA3BF;font-size:15px;margin-bottom:24px;line-height:1.6}
+.modal .close{
+  position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.05);display:grid;place-items:center;font-size:20px;color:#9CA3BF;
+  transition:all .2s;
+}
+.modal .close:hover{background:rgba(255,255,255,.10);color:#fff}
+.modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* fade-in on scroll */
+.fade{opacity:0;transform:translateY(20px);transition:all .8s ease-out}
+.fade.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="bgfx"></div>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24"><path d="M5 18 L12 4 L19 18 L12 14 Z"/></svg>
+      </span>
+      <b>AetherFlow</b>
+    </a>
+    <div class="nav-links">
+      <a href="#features" data-i18n="nav_features">Funciones</a>
+      <a href="#how" data-i18n="nav_how">Cómo funciona</a>
+      <a href="#pricing" data-i18n="nav_pricing">Precios</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <div class="lang-switch">
+        <button class="lang-btn" id="langBtn" aria-label="Language">
+          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span id="langLabel">ES</span>
+          <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 4 L5 7 L8 4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="es" data-rtl="false" class="active"><span class="flag">🇪🇸</span> Español</button>
+          <button data-lang="en" data-rtl="false"><span class="flag">🇺🇸</span> English</button>
+          <button data-lang="pt" data-rtl="false"><span class="flag">🇧🇷</span> Português</button>
+          <button data-lang="fr" data-rtl="false"><span class="flag">🇫🇷</span> Français</button>
+          <button data-lang="de" data-rtl="false"><span class="flag">🇩🇪</span> Deutsch</button>
+          <button data-lang="zh" data-rtl="false"><span class="flag">🇨🇳</span> 中文</button>
+          <button data-lang="ja" data-rtl="false"><span class="flag">🇯🇵</span> 日本語</button>
+          <button data-lang="ar" data-rtl="true"><span class="flag">🇸🇦</span> العربية</button>
+        </div>
+      </div>
+      <a href="#pricing" class="cta-btn" data-i18n="nav_cta">Empezar</a>
+      <button class="menu-btn" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span><span data-i18n="hero_eyebrow">Nuevo · Pago por uso · Sin suscripción</span></span>
+    <h1>
+      <span data-i18n="hero_h1_1">Automatiza el mundo.</span><br>
+      <span class="grad" data-i18n="hero_h1_2">En cualquier idioma. Desde cualquier lugar.</span>
+    </h1>
+    <p class="lead" data-i18n="hero_lead">
+      AetherFlow es tu copiloto de IA universal que ejecuta tareas de productividad las 24 horas.
+      Paga solo por lo que usas. Premium, seguro y ultra rápido.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="cta-btn" data-i18n="hero_cta_primary">Probar gratis →</a>
+      <a href="#how" class="cta-btn ghost" data-i18n="hero_cta_secondary">Ver cómo funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="v">100+</div><div class="l" data-i18n="stat_langs">Idiomas soportados</div></div>
+      <div class="hero-stat"><div class="v">24/7</div><div class="l" data-i18n="stat_uptime">Disponibilidad</div></div>
+      <div class="hero-stat"><div class="v">&lt;30s</div><div class="l" data-i18n="stat_speed">Tiempo de respuesta</div></div>
+      <div class="hero-stat"><div class="v">AES-256</div><div class="l" data-i18n="stat_secure">Cifrado empresarial</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="trust">
+  <div class="container">
+    <p class="trust-label" data-i18n="trust_label">La elegida por profesionales, equipos y creadores en +80 países</p>
+    <div class="trust-logos">
+      <span>STUDIO NOVA</span><span>HELIX LABS</span><span>BLUEPRINT</span>
+      <span>RIVERSIDE</span><span>NORTHWIND</span><span>KAIROS</span>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></span><span data-i18n="feat_eyebrow">Funciones</span></span>
+      <h2 data-i18n="feat_title">Una plataforma. Ocho superpoderes.</h2>
+      <p data-i18n="feat_sub">Automatizaciones listas para usar que se adaptan a tu flujo de trabajo, equipo e industria.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature fade"><div class="ico">✉️</div><h3 data-i18n="f1_t">Email inteligente</h3><p data-i18n="f1_d">Redacta, envía y responde correos automáticamente con tono perfecto.</p></div>
+      <div class="feature fade"><div class="ico">📅</div><h3 data-i18n="f2_t">Calendario mágico</h3><p data-i18n="f2_d">Programa reuniones y recordatorios en cualquier zona horaria del mundo.</p></div>
+      <div class="feature fade"><div class="ico">📄</div><h3 data-i18n="f3_t">Documentos al instante</h3><p data-i18n="f3_d">Genera reportes, propuestas y contratos premium en segundos.</p></div>
+      <div class="feature fade"><div class="ico">🔍</div><h3 data-i18n="f4_t">Investigación veloz</h3><p data-i18n="f4_d">Investiga, resume y analiza datos con fuentes verificadas.</p></div>
+      <div class="feature fade"><div class="ico">🌐</div><h3 data-i18n="f5_t">Traducción nativa</h3><p data-i18n="f5_d">Traduce a 100+ idiomas con tono y contexto cultural.</p></div>
+      <div class="feature fade"><div class="ico">📊</div><h3 data-i18n="f6_t">Análisis profundo</h3><p data-i18n="f6_d">Convierte datos en bruto en insights accionables.</p></div>
+      <div class="feature fade"><div class="ico">🎨</div><h3 data-i18n="f7_t">Contenido creativo</h3><p data-i18n="f7_d">Textos, imágenes y copy optimizado para cada canal.</p></div>
+      <div class="feature fade"><div class="ico">⚙️</div><h3 data-i18n="f8_t">Flujos personalizados</h3><p data-i18n="f8_d">Conecta tus herramientas favoritas en un solo clic.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></span><span data-i18n="how_eyebrow">Cómo funciona</span></span>
+      <h2 data-i18n="how_title">Tres pasos. Un resultado premium.</h2>
+      <p data-i18n="how_sub">Tan simple como enviar un mensaje. Tan poderoso como un equipo entero.</p>
+    </div>
+    <div class="steps">
+      <div class="step fade">
+        <div class="step-num">1</div>
+        <h3 data-i18n="h1_t">Cuéntanos tu tarea</h3>
+        <p data-i18n="h1_d">Describe en tu idioma, con tus palabras, lo que necesitas terminar.</p>
+      </div>
+      <div class="step fade">
+        <div class="step-num">2</div>
+        <h3 data-i18n="h2_t">AetherFlow ejecuta</h3>
+        <p data-i18n="h2_d">La IA planifica, ejecuta paso a paso y verifica la calidad del resultado.</p>
+      </div>
+      <div class="step fade">
+        <div class="step-num">3</div>
+        <h3 data-i18n="h3_t">Recibe premium</h3>
+        <p data-i18n="h3_d">Recibe entregables listos para usar, en minutos, en el formato que prefieras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></span><span data-i18n="price_eyebrow">Precios</span></span>
+      <h2 data-i18n="price_title">Paga solo por lo que consumes.</h2>
+      <p data-i18n="price_sub">Sin suscripción. Sin letra pequeña. Cargas créditos y los usas cuando quieras.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card fade">
+        <div class="price-name" data-i18n="pn1">Inicial</div>
+        <div class="price-credits">5<small data-i18n="pn1_unit">créditos gratis</small></div>
+        <div class="price-bundle"><span class="cur">$</span>0<span class="per" data-i18n="pn1_per">para siempre</span></div>
+        <p class="price-desc" data-i18n="pn1_d">Perfecto para probar todas las funciones sin riesgo.</p>
+        <button class="cta-btn ghost start-btn" data-plan="free" data-i18n="pn1_btn">Comenzar gratis</button>
+        <div style="margin-top:14px">
+          <div class="price-feat" data-i18n="pn1_f1">Acceso a 8 funciones</div>
+          <div class="price-feat" data-i18n="pn1_f2">Soporte estándar</div>
+          <div class="price-feat" data-i18n="pn1_f3">1 idioma principal</div>
+        </div>
+      </div>
+      <div class="price-card fade popular">
+        <div class="popular-badge" data-i18n="popular">Más popular</div>
+        <div class="price-name" data-i18n="pn2">Pro</div>
+        <div class="price-credits">200<small data-i18n="pn2_unit">créditos</small></div>
+        <div class="price-bundle"><span class="cur">$</span>29<span class="per" data-i18n="pn2_per">≈ $0.15 / tarea</span></div>
+        <span class="price-save" data-i18n="pn2_save">Ahorras 25%</span>
+        <p class="price-desc" data-i18n="pn2_d">Para profesionales y pequeños equipos que automatizan a diario.</p>
+        <button class="cta-btn start-btn" data-plan="pro" data-i18n="pn2_btn">Comprar Pro</button>
+        <div style="margin-top:14px">
+          <div class="price-feat" data-i18n="pn2_f1">Todo de Inicial</div>
+          <div class="price-feat" data-i18n="pn2_f2">+ 100 idiomas</div>
+          <div class="price-feat" data-i18n="pn2_f3">Soporte prioritario</div>
+          <div class="price-feat" data-i18n="pn2_f4">Flujos personalizados</div>
+        </div>
+        <p class="equiv" data-i18n="pn2_equiv">≈ €27 · R$150 · £23 · ¥2.100</p>
+      </div>
+      <div class="price-card fade">
+        <div class="price-name" data-i18n="pn3">Business</div>
+        <div class="price-credits">1.000<small data-i18n="pn3_unit">créditos</small></div>
+        <div class="price-bundle"><span class="cur">$</span>99<span class="per" data-i18n="pn3_per">≈ $0.10 / tarea</span></div>
+        <span class="price-save" data-i18n="pn3_save">Ahorras 50%</span>
+        <p class="price-desc" data-i18n="pn3_d">Equipos medianos que escalan operaciones sin contratar más personal.</p>
+        <button class="cta-btn ghost start-btn" data-plan="biz" data-i18n="pn3_btn">Comprar Business</button>
+        <div style="margin-top:14px">
+          <div class="price-feat" data-i18n="pn3_f1">Todo de Pro</div>
+          <div class="price-feat" data-i18n="pn3_f2">API completa</div>
+          <div class="price-feat" data-i18n="pn3_f3">5 cuentas de equipo</div>
+          <div class="price-feat" data-i18n="pn3_f4">SLA del 99.9%</div>
+        </div>
+        <p class="equiv" data-i18n="pn3_equiv">≈ €93 · R$510 · £78 · ¥7.200</p>
+      </div>
+      <div class="price-card fade">
+        <div class="price-name" data-i18n="pn4">Enterprise</div>
+        <div class="price-credits">∞<small data-i18n="pn4_unit">créditos a medida</small></div>
+        <div class="price-bundle" style="font-size:28px;margin-top:18px" data-i18n="pn4_b">Personalizado</div>
+        <p class="price-desc" data-i18n="pn4_d">Volumen, integraciones a medida, dedicada y formación del equipo.</p>
+        <button class="cta-btn ghost start-btn" data-plan="ent" data-i18n="pn4_btn">Hablar con ventas</button>
+        <div style="margin-top:14px">
+          <div class="price-feat" data-i18n="pn4_f1">Todo de Business</div>
+          <div class="price-feat" data-i18n="pn4_f2">SSO y SAML</div>
+          <div class="price-feat" data-i18n="pn4_f3">Gestor de cuenta</div>
+          <div class="price-feat" data-i18n="pn4_f4">On-premise opcional</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></span><span data-i18n="uc_eyebrow">Casos de uso</span></span>
+      <h2 data-i18n="uc_title">Diseñado para todos. Para todo.</h2>
+      <p data-i18n="uc_sub">Cambia de pestaña y descubre cómo AetherFlow resuelve tu próximo reto.</p>
+    </div>
+    <div class="tabs" id="ucTabs">
+      <button class="tab active" data-uc="free" data-i18n="uct_free">Freelancers</button>
+      <button class="tab" data-uc="emp" data-i18n="uct_emp">Emprendedores</button>
+      <button class="tab" data-uc="agc" data-i18n="uct_agc">Agencias</button>
+      <button class="tab" data-uc="edu" data-i18n="uct_edu">Educación</button>
+      <button class="tab" data-uc="ec" data-i18n="uct_ec">E-commerce</button>
+    </div>
+    <div id="ucContent">
+      <div class="use-case-card fade" data-uc-panel="free">
+        <div>
+          <div class="use-case-emoji">🎯</div>
+          <h3 data-i18n="ucc1_t">Freelancers que escalan sin contratar</h3>
+          <p data-i18n="ucc1_p">Ahorra 10 horas por semana automatizando emails, propuestas, contratos y reportes en tu idioma nativo.</p>
+        </div>
+        <ul>
+          <li data-i18n="ucc1_l1">Propuestas personalizadas en 60 segundos</li>
+          <li data-i18n="ucc1_l2">Onboarding automático de nuevos clientes</li>
+          <li data-i18n="ucc1_l3">Facturación y seguimiento de pagos</li>
+          <li data-i18n="ucc1_l4">Reportes semanales sin esfuerzo</li>
+        </ul>
+      </div>
+      <div class="use-case-card fade" data-uc-panel="emp" style="display:none">
+        <div>
+          <div class="use-case-emoji">🚀</div>
+          <h3 data-i18n="ucc2_t">Emprendedores que lanzan rápido</h3>
+          <p data-i18n="ucc2_p">Lanza MVPs, valida ideas y automatiza marketing sin equipo técnico.</p>
+        </div>
+        <ul>
+          <li data-i18n="ucc2_l1">Investigación de mercado instantánea</li>
+          <li data-i18n="ucc2_l2">Copy para landing pages en 8 idiomas</li>
+          <li data-i18n="ucc2_l3">Atención al cliente 24/7</li>
+          <li data-i18n="ucc2_l4">Análisis competitivo semanal</li>
+        </ul>
+      </div>
+      <div class="use-case-card fade" data-uc-panel="agc" style="display:none">
+        <div>
+          <div class="use-case-emoji">🎨</div>
+          <h3 data-i18n="ucc3_t">Agencias que entregan más, facturan más</h3>
+          <p data-i18n="ucc3_p">Multiplica capacidad de entrega sin aumentar plantilla.</p>
+        </div>
+        <ul>
+          <li data-i18n="ucc3_l1">Briefings creativos automatizados</li>
+          <li data-i18n="ucc3_l2">Reportes para múltiples clientes</li>
+          <li data-i18n="ucc3_l3">Traducción simultánea de campañas</li>
+          <li data-i18n="ucc3_l4">QA de contenidos a escala</li>
+        </ul>
+      </div>
+      <div class="use-case-card fade" data-uc-panel="edu" style="display:none">
+        <div>
+          <div class="use-case-emoji">📚</div>
+          <h3 data-i18n="ucc4_t">Educación que llega a todos los idiomas</h3>
+          <p data-i18n="ucc4_p">Crea contenido educativo, tutorías y evaluaciones adaptadas al estudiante.</p>
+        </div>
+        <ul>
+          <li data-i18n="ucc4_l1">Planes de estudio personalizados</li>
+          <li data-i18n="ucc4_l2">Traducción académica verificada</li>
+          <li data-i18n="ucc4_l3">Generación de ejercicios</li>
+          <li data-i18n="ucc4_l4">Retroalimentación instantánea</li>
+        </ul>
+      </div>
+      <div class="use-case-card fade" data-uc-panel="ec" style="display:none">
+        <div>
+          <div class="use-case-emoji">🛒</div>
+          <h3 data-i18n="ucc5_t">E-commerce que vende en todos los mercados</h3>
+          <p data-i18n="ucc5_p">Vende globalmente con descripciones, emails y soporte en el idioma del cliente.</p>
+        </div>
+        <ul>
+          <li data-i18n="ucc5_l1">Descripciones de producto multiidioma</li>
+          <li data-i18n="ucc5_l2">Email marketing localizado</li>
+          <li data-i18n="ucc5_l3">Atención al cliente automática</li>
+          <li data-i18n="ucc5_l4">Análisis de reseñas y tendencias</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></script></span><span data-i18n="sec_eyebrow">Seguridad</span></span>
+      <h2 data-i18n="sec_title">Tu confianza es la base. La seguridad, nuestro cimiento.</h2>
+    </div>
+    <div class="security-grid">
+      <div class="sec fade"><div class="ico">🔒</div><h3 data-i18n="sec1_t">Cifrado extremo a extremo</h3><p data-i18n="sec1_d">AES-256 en reposo y TLS 1.3 en tránsito. Tus datos nunca se exponen.</p></div>
+      <div class="sec fade"><div class="ico">🛡️</div><h3 data-i18n="sec2_t">Pagos certificados PCI DSS</h3><p data-i18n="sec2_d">Stripe, Mercado Pago, PayPal, Pix y Apple Pay cumplen los estándares más altos.</p></div>
+      <div class="sec fade"><div class="ico">🌍</div><h3 data-i18n="sec3_t">Infraestructura global</h3><p data-i18n="sec3_d">Servidores en 6 regiones: baja latencia y cumplimiento regional.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-head fade">
+      <span class="eyebrow"><span class="dot"></span><span data-i18n="faq_eyebrow">Preguntas frecuentes</span></span>
+      <h2 data-i18n="faq_title">Resolvemos tus dudas</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq fade"><div class="faq-q"><h3 data-i18n="q1">¿Cómo funcionan los créditos?</h3><span class="chev">⌄</span></div><div class="faq-a" data-i18n="a1">Cada tarea típica consume 1 crédito (un email, un resumen corto, una traducción breve). Tareas más largas pueden costar más. El precio exacto siempre se muestra antes de ejecutar.</div></div>
+      <div class="faq fade"><div class="faq-q"><h3 data-i18n="q2">¿Puedo usarlo en mi idioma?</h3><span class="chev">⌄</span></div><div class="faq-a" data-i18n="a2">Sí. La interfaz está traducida a 8 idiomas y la IA entiende y produce contenido en más de 100. Solo escribe o habla naturalmente.</div></div>
+      <div class="faq fade"><div class="faq-q"><h3 data-i18n="q3">¿Qué métodos de pago aceptan?</h3><span class="chev">⌄</span></div><div class="faq-a" data-i18n="a3">Tarjetas (Visa, MasterCard, Amex), Apple Pay, Google Pay, PayPal, Mercado Pago, Pix (Brasil), SPEI (México), SEPA (Europa) y Bizum (España). Pago único, sin suscripciones obligatorias.</div></div>
+      <div class="faq fade"><div class="faq-q"><h3 data-i18n="q4">¿Mis datos están seguros?</h3><span class="chev">⌄</span></div><div class="faq-a" data-i18n="a4">Absolutamente. Cifrado AES-256, cumplimiento GDPR/SOC2, nunca usamos tus datos para entrenar modelos. Puedes borrar tu cuenta y todos sus datos con un clic.</div></div>
+      <div class="faq fade"><div class="faq-q"><h3 data-i18n="q5">¿Hay reembolso?</h3><span class="chev">⌄</span></div><div class="faq-a" data-i18n="a5">Sí. 30 días de devolución sin preguntas para paquetes de créditos nuevos. Los créditos no usados se reintegran íntegros.</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="final-cta fade">
+      <h2 data-i18n="final_h">Carga créditos en 60 segundos.<br>Automatiza el resto de tu vida.</h2>
+      <p data-i18n="final_p">Sin tarjeta de crédito para empezar. 5 créditos gratis para siempre.</p>
+      <a href="#pricing" class="cta-btn" data-i18n="final_cta" style="font-size:16px;padding:14px 28px">Comprar créditos →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">
+          <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M5 18 L12 4 L19 18 L12 14 Z"/></svg></span>
+          <b>AetherFlow</b>
+        </div>
+        <p data-i18n="foot_brand">Automatización IA universal. Paga por uso, premium y segura, en cualquier idioma del planeta.</p>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="foot_p">Producto</h4>
+        <ul>
+          <li><a href="#features" data-i18n="foot_p1">Funciones</a></li>
+          <li><a href="#pricing" data-i18n="foot_p2">Precios</a></li>
+          <li><a href="#" data-i18n="foot_p3">API</a></li>
+          <li><a href="#" data-i18n="foot_p4">Estado del servicio</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="foot_co">Compañía</h4>
+        <ul>
+          <li><a href="#" data-i18n="foot_co1">Sobre nosotros</a></li>
+          <li><a href="#" data-i18n="foot_co2">Blog</a></li>
+          <li><a href="#" data-i18n="foot_co3">Carreras</a></li>
+          <li><a href="#" data-i18n="foot_co4">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 data-i18n="foot_l">Legal</h4>
+        <ul>
+          <li><a href="#" data-i18n="foot_l1">Términos</a></li>
+          <li><a href="#" data-i18n="foot_l2">Privacidad</a></li>
+          <li><a href="#" data-i18n="foot_l3">Cookies</a></li>
+          <li><a href="#" data-i18n="foot_l4">Seguridad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-i18n="foot_copy">© 2025 AetherFlow · Hecho con IA para el mundo · v1.0</span>
+      <div class="payments">
+        <span>VISA</span><span>MasterCard</span><span>AMEX</span><span> PayPal </span><span> Apple Pay </span><span> G Pay </span><span> PIX </span><span> SPEI </span><span> Bizum </span><span> SEPA </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<div class="modal-bg" id="modalBg">
+  <div class="modal" style="position:relative">
+    <button class="close" id="modalClose" aria-label="Cerrar">×</button>
+    <h3 id="modalTitle">¡Excelente elección!</h3>
+    <p id="modalBody">Estás a un paso de desbloquear la automatización premium. En producción este botón abre Stripe Checkout de forma segura.</p>
+    <div class="modal-actions">
+      <button class="cta-btn" id="modalPrimary">Ir a Checkout</button>
+      <button class="cta-btn ghost" id="modalSecondary">Seguir explorando</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== i18n ===== */
+const I18N = {
+  es:{
+    nav_features:'Funciones',nav_how:'Cómo funciona',nav_pricing:'Precios',nav_faq:'FAQ',nav_cta:'Empezar',
+    hero_eyebrow:'Nuevo · Pago por uso · Sin suscripción',
+    hero_h1_1:'Automatiza el mundo.',hero_h1_2:'En cualquier idioma. Desde cualquier lugar.',
+    hero_lead:'AetherFlow es tu copiloto de IA universal que ejecuta tareas de productividad las 24 horas. Paga solo por lo que usas. Premium, seguro y ultra rápido.',
+    hero_cta_primary:'Probar gratis →',hero_cta_secondary:'Ver cómo funciona',
+    stat_langs:'Idiomas soportados',stat_uptime:'Disponibilidad',stat_speed:'Tiempo de respuesta',stat_secure:'Cifrado empresarial',
+    trust_label:'La elegida por profesionales, equipos y creadores en +80 países',
+    feat_eyebrow:'Funciones',feat_title:'Una plataforma. Ocho superpoderes.',feat_sub:'Automatizaciones listas para usar que se adaptan a tu flujo de trabajo, equipo e industria.',
+    f1_t:'Email inteligente',f1_d:'Redacta, envía y responde correos automáticamente con tono perfecto.',
+    f2_t:'Calendario mágico',f2_d:'Programa reuniones y recordatorios en cualquier zona horaria del mundo.',
+    f3_t:'Documentos al instante',f3_d:'Genera reportes, propuestas y contratos premium en segundos.',
+    f4_t:'Investigación veloz',f4_d:'Investiga, resume y analiza datos con fuentes verificadas.',
+    f5_t:'Traducción nativa',f5_d:'Traduce a 100+ idiomas con tono y contexto cultural.',
+    f6_t:'Análisis profundo',f6_d:'Convierte datos en bruto en insights accionables.',
+    f7_t:'Contenido creativo',f7_d:'Textos, imágenes y copy optimizado para cada canal.',
+    f8_t:'Flujos personalizados',f8_d:'Conecta tus herramientas favoritas en un solo clic.',
+    how_eyebrow:'Cómo funciona',how_title:'Tres pasos. Un resultado premium.',how_sub:'Tan simple como enviar un mensaje. Tan poderoso como un equipo entero.',
+    h1_t:'Cuéntanos tu tarea',h1_d:'Describe en tu idioma, con tus palabras, lo que necesitas terminar.',
+    h2_t:'AetherFlow ejecuta',h2_d:'La IA planifica, ejecuta paso a paso y verifica la calidad del resultado.',
+    h3_t:'Recibe premium',h3_d:'Recibe entregables listos para usar, en minutos, en el formato que prefieras.',
+    price_eyebrow:'Precios',price_title:'Paga solo por lo que consumes.',price_sub:'Sin suscripción. Sin letra pequeña. Cargas créditos y los usas cuando quieras.',
+    pn1:'Inicial',pn1_unit:'créditos gratis',pn1_per:'para siempre',pn1_d:'Perfecto para probar todas las funciones sin riesgo.',pn1_btn:'Comenzar gratis',
+    pn1_f1:'Acceso a 8 funciones',pn1_f2:'Soporte estándar',pn1_f3:'1 idioma principal',
+    popular:'Más popular',pn2:'Pro',pn2_unit:'créditos',pn2_per:'≈ $0.15 / tarea',pn2_save:'Ahorras 25%',pn2_d:'Para profesionales y pequeños equipos que automatizan a diario.',pn2_btn:'Comprar Pro',
+    pn2_f1:'Todo de Inicial',pn2_f2:'+ 100 idiomas',pn2_f3:'Soporte prioritario',pn2_f4:'Flujos personalizados',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2.100',
+    pn3:'Business',pn3_unit:'créditos',pn3_per:'≈ $0.10 / tarea',pn3_save:'Ahorras 50%',pn3_d:'Equipos medianos que escalan operaciones sin contratar más personal.',pn3_btn:'Comprar Business',
+    pn3_f1:'Todo de Pro',pn3_f2:'API completa',pn3_f3:'5 cuentas de equipo',pn3_f4:'SLA del 99.9%',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7.200',
+    pn4:'Enterprise',pn4_unit:'créditos a medida',pn4_b:'Personalizado',pn4_d:'Volumen, integraciones a medida, dedicada y formación del equipo.',pn4_btn:'Hablar con ventas',
+    pn4_f1:'Todo de Business',pn4_f2:'SSO y SAML',pn4_f3:'Gestor de cuenta',pn4_f4:'On-premise opcional',
+    uc_eyebrow:'Casos de uso',uc_title:'Diseñado para todos. Para todo.',uc_sub:'Cambia de pestaña y descubre cómo AetherFlow resuelve tu próximo reto.',
+    uct_free:'Freelancers',uct_emp:'Emprendedores',uct_agc:'Agencias',uct_edu:'Educación',uct_ec:'E-commerce',
+    ucc1_t:'Freelancers que escalan sin contratar',ucc1_p:'Ahorra 10 horas por semana automatizando emails, propuestas, contratos y reportes en tu idioma nativo.',
+    ucc1_l1:'Propuestas personalizadas en 60 segundos',ucc1_l2:'Onboarding automático de nuevos clientes',ucc1_l3:'Facturación y seguimiento de pagos',ucc1_l4:'Reportes semanales sin esfuerzo',
+    ucc2_t:'Emprendedores que lanzan rápido',ucc2_p:'Lanza MVPs, valida ideas y automatiza marketing sin equipo técnico.',
+    ucc2_l1:'Investigación de mercado instantánea',ucc2_l2:'Copy para landing pages en 8 idiomas',ucc2_l3:'Atención al cliente 24/7',ucc2_l4:'Análisis competitivo semanal',
+    ucc3_t:'Agencias que entregan más, facturan más',ucc3_p:'Multiplica capacidad de entrega sin aumentar plantilla.',
+    ucc3_l1:'Briefings creativos automatizados',ucc3_l2:'Reportes para múltiples clientes',ucc3_l3:'Traducción simultánea de campañas',ucc3_l4:'QA de contenidos a escala',
+    ucc4_t:'Educación que llega a todos los idiomas',ucc4_p:'Crea contenido educativo, tutorías y evaluaciones adaptadas al estudiante.',
+    ucc4_l1:'Planes de estudio personalizados',ucc4_l2:'Traducción académica verificada',ucc4_l3:'Generación de ejercicios',ucc4_l4:'Retroalimentación instantánea',
+    ucc5_t:'E-commerce que vende en todos los mercados',ucc5_p:'Vende globalmente con descripciones, emails y soporte en el idioma del cliente.',
+    ucc5_l1:'Descripciones de producto multiidioma',ucc5_l2:'Email marketing localizado',ucc5_l3:'Atención al cliente automática',ucc5_l4:'Análisis de reseñas y tendencias',
+    sec_eyebrow:'Seguridad',sec_title:'Tu confianza es la base. La seguridad, nuestro cimiento.',
+    sec1_t:'Cifrado extremo a extremo',sec1_d:'AES-256 en reposo y TLS 1.3 en tránsito. Tus datos nunca se exponen.',
+    sec2_t:'Pagos certificados PCI DSS',sec2_d:'Stripe, Mercado Pago, PayPal, Pix y Apple Pay cumplen los estándares más altos.',
+    sec3_t:'Infraestructura global',sec3_d:'Servidores en 6 regiones: baja latencia y cumplimiento regional.',
+    faq_eyebrow:'Preguntas frecuentes',faq_title:'Resolvemos tus dudas',
+    q1:'¿Cómo funcionan los créditos?',a1:'Cada tarea típica consume 1 crédito (un email, un resumen corto, una traducción breve). Tareas más largas pueden costar más. El precio exacto siempre se muestra antes de ejecutar.',
+    q2:'¿Puedo usarlo en mi idioma?',a2:'Sí. La interfaz está traducida a 8 idiomas y la IA entiende y produce contenido en más de 100. Solo escribe o habla naturalmente.',
+    q3:'¿Qué métodos de pago aceptan?',a3:'Tarjetas (Visa, MasterCard, Amex), Apple Pay, Google Pay, PayPal, Mercado Pago, Pix (Brasil), SPEI (México), SEPA (Europa) y Bizum (España). Pago único, sin suscripciones obligatorias.',
+    q4:'¿Mis datos están seguros?',a4:'Absolutamente. Cifrado AES-256, cumplimiento GDPR/SOC2, nunca usamos tus datos para entrenar modelos. Puedes borrar tu cuenta y todos sus datos con un clic.',
+    q5:'¿Hay reembolso?',a5:'Sí. 30 días de devolución sin preguntas para paquetes de créditos nuevos. Los créditos no usados se reintegran íntegros.',
+    final_h:'Carga créditos en 60 segundos.<br>Automatiza el resto de tu vida.',final_p:'Sin tarjeta de crédito para empezar. 5 créditos gratis para siempre.',final_cta:'Comprar créditos →',
+    foot_brand:'Automatización IA universal. Paga por uso, premium y segura, en cualquier idioma del planeta.',
+    foot_p:'Producto',foot_p1:'Funciones',foot_p2:'Precios',foot_p3:'API',foot_p4:'Estado del servicio',
+    foot_co:'Compañía',foot_co1:'Sobre nosotros',foot_co2:'Blog',foot_co3:'Carreras',foot_co4:'Contacto',
+    foot_l:'Legal',foot_l1:'Términos',foot_l2:'Privacidad',foot_l3:'Cookies',foot_l4:'Seguridad',
+    foot_copy:'© 2025 AetherFlow · Hecho con IA para el mundo · v1.0',
+    modal_title:'¡Excelente elección!',modal_body:'Estás a un paso de desbloquear la automatización premium. Demo: en producción este botón abre Stripe Checkout de forma segura.',
+    modal_primary:'Ir a Checkout',modal_secondary:'Seguir explorando',
+  },
+  en:{
+    nav_features:'Features',nav_how:'How it works',nav_pricing:'Pricing',nav_faq:'FAQ',nav_cta:'Get started',
+    hero_eyebrow:'New · Pay-per-use · No subscription',
+    hero_h1_1:'Automate the world.',hero_h1_2:'In any language. From anywhere.',
+    hero_lead:'AetherFlow is your universal AI co-pilot that runs productivity tasks 24/7. Pay only for what you use. Premium, secure, ultra fast.',
+    hero_cta_primary:'Try free →',hero_cta_secondary:'See how it works',
+    stat_langs:'Languages supported',stat_uptime:'Uptime',stat_speed:'Response time',stat_secure:'Enterprise encryption',
+    trust_label:'Chosen by professionals, teams and creators in 80+ countries',
+    feat_eyebrow:'Features',feat_title:'One platform. Eight superpowers.',feat_sub:'Ready-to-use automations that fit your workflow, team and industry.',
+    f1_t:'Smart email',f1_d:'Draft, send and reply with the perfect tone automatically.',
+    f2_t:'Magic calendar',f2_d:'Schedule meetings and reminders across any time zone.',
+    f3_t:'Instant documents',f3_d:'Premium reports, proposals and contracts in seconds.',
+    f4_t:'Fast research',f4_d:'Research, summarize and analyze with verified sources.',
+    f5_t:'Native translation',f5_d:'Translate to 100+ languages with cultural nuance.',
+    f6_t:'Deep analysis',f6_d:'Turn raw data into actionable insights.',
+    f7_t:'Creative content',f7_d:'Text, images and copy optimized per channel.',
+    f8_t:'Custom flows',f8_d:'Connect your favorite tools in one click.',
+    how_eyebrow:'How it works',how_title:'Three steps. One premium result.',how_sub:'As simple as sending a message. As powerful as a full team.',
+    h1_t:'Tell us the task',h1_d:'Describe in your own language what you need done.',
+    h2_t:'AetherFlow runs it',h2_d:'The AI plans, executes step by step and verifies quality.',
+    h3_t:'Receive premium',h3_d:'Get ready-to-use deliverables in minutes, in your format.',
+    price_eyebrow:'Pricing',price_title:'Pay only for what you consume.',price_sub:'No subscription. No fine print. Load credits and use them whenever you want.',
+    pn1:'Starter',pn1_unit:'free credits',pn1_per:'forever',pn1_d:'Perfect to try every feature risk-free.',pn1_btn:'Start free',
+    pn1_f1:'Access to 8 features',pn1_f2:'Standard support',pn1_f3:'1 main language',
+    popular:'Most popular',pn2:'Pro',pn2_unit:'credits',pn2_per:'≈ $0.15 / task',pn2_save:'Save 25%',pn2_d:'For professionals and small teams automating daily.',pn2_btn:'Buy Pro',
+    pn2_f1:'Everything in Starter',pn2_f2:'+ 100 languages',pn2_f3:'Priority support',pn2_f4:'Custom flows',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2,100',
+    pn3:'Business',pn3_unit:'credits',pn3_per:'≈ $0.10 / task',pn3_save:'Save 50%',pn3_d:'Mid-size teams scaling operations without new hires.',pn3_btn:'Buy Business',
+    pn3_f1:'Everything in Pro',pn3_f2:'Full API',pn3_f3:'5 team seats',pn3_f4:'99.9% SLA',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7,200',
+    pn4:'Enterprise',pn4_unit:'tailored credits',pn4_b:'Custom',pn4_d:'Volume, custom integrations, dedicated team and training.',pn4_btn:'Talk to sales',
+    pn4_f1:'Everything in Business',pn4_f2:'SSO & SAML',pn4_f3:'Account manager',pn4_f4:'On-premise optional',
+    uc_eyebrow:'Use cases',uc_title:'Built for everyone. For everything.',uc_sub:'Switch tabs and see how AetherFlow solves your next challenge.',
+    uct_free:'Freelancers',uct_emp:'Entrepreneurs',uct_agc:'Agencies',uct_edu:'Education',uct_ec:'E-commerce',
+    ucc1_t:'Freelancers scaling without hiring',ucc1_p:'Save 10 hours per week automating emails, proposals, contracts and reports.',
+    ucc1_l1:'Personalized proposals in 60 seconds',ucc1_l2:'Automatic onboarding',ucc1_l3:'Invoicing and follow-up',ucc1_l4:'Weekly reports on autopilot',
+    ucc2_t:'Entrepreneurs launching fast',ucc2_p:'Launch MVPs, validate ideas and automate marketing without a tech team.',
+    ucc2_l1:'Instant market research',ucc2_l2:'Landing copy in 8 languages',ucc2_l3:'24/7 customer support',ucc2_l4:'Weekly competitor analysis',
+    ucc3_t:'Agencies delivering more, billing more',ucc3_p:'Multiply output without growing the team.',
+    ucc3_l1:'Automated creative briefs',ucc3_l2:'Multi-client reports',ucc3_l3:'Simultaneous campaign translation',ucc3_l4:'QA at scale',
+    ucc4_t:'Education that reaches every language',ucc4_p:'Create learning content, tutoring and assessments adapted to each student.',
+    ucc4_l1:'Personalized study plans',ucc4_l2:'Verified academic translation',ucc4_l3:'Exercise generation',ucc4_l4:'Instant feedback',
+    ucc5_t:'E-commerce selling in every market',ucc5_p:'Sell globally with descriptions, emails and support in your customer\'s language.',
+    ucc5_l1:'Multilingual product descriptions',ucc5_l2:'Localized email marketing',ucc5_l3:'Automated customer support',ucc5_l4:'Review & trend analysis',
+    sec_eyebrow:'Security',sec_title:'Your trust is the foundation. Security is our bedrock.',
+    sec1_t:'End-to-end encryption',sec1_d:'AES-256 at rest, TLS 1.3 in transit. Your data is never exposed.',
+    sec2_t:'PCI DSS certified payments',sec2_d:'Stripe, Mercado Pago, PayPal, Pix and Apple Pay meet the highest standards.',
+    sec3_t:'Global infrastructure',sec3_d:'Servers in 6 regions: low latency and regional compliance.',
+    faq_eyebrow:'Frequently asked',faq_title:'Your questions, answered',
+    q1:'How do credits work?',a1:'Each typical task consumes 1 credit (an email, short summary, brief translation). Longer tasks may cost more. The exact price is shown before running.',
+    q2:'Can I use it in my language?',a2:'Yes. The interface is translated to 8 languages and the AI understands and produces content in 100+. Just type or speak naturally.',
+    q3:'Which payment methods do you accept?',a3:'Cards (Visa, MasterCard, Amex), Apple Pay, Google Pay, PayPal, Mercado Pago, Pix (Brazil), SPEI (Mexico), SEPA (Europe) and Bizum (Spain). One-time payment, no mandatory subscriptions.',
+    q4:'Is my data safe?',a4:'Absolutely. AES-256 encryption, GDPR/SOC2 compliant, we never use your data to train models. Delete your account and all data with one click.',
+    q5:'Is there a refund?',a5:'Yes. 30-day no-questions refund on new credit packs. Unused credits are fully refunded.',
+    final_h:'Load credits in 60 seconds.<br>Automate the rest of your life.',final_p:'No credit card to start. 5 free credits forever.',final_cta:'Buy credits →',
+    foot_brand:'Universal AI automation. Pay-per-use, premium and secure, in every language on the planet.',
+    foot_p:'Product',foot_p1:'Features',foot_p2:'Pricing',foot_p3:'API',foot_p4:'Service status',
+    foot_co:'Company',foot_co1:'About us',foot_co2:'Blog',foot_co3:'Careers',foot_co4:'Contact',
+    foot_l:'Legal',foot_l1:'Terms',foot_l2:'Privacy',foot_l3:'Cookies',foot_l4:'Security',
+    foot_copy:'© 2025 AetherFlow · Made with AI for the world · v1.0',
+    modal_title:'Excellent choice!',modal_body:'You\'re one step away from unlocking premium automation. Demo: in production this opens Stripe Checkout securely.',
+    modal_primary:'Go to Checkout',modal_secondary:'Keep exploring',
+  },
+  pt:{
+    nav_features:'Recursos',nav_how:'Como funciona',nav_pricing:'Preços',nav_faq:'FAQ',nav_cta:'Começar',
+    hero_eyebrow:'Novo · Paga por uso · Sem assinatura',
+    hero_h1_1:'Automatize o mundo.',hero_h1_2:'Em qualquer idioma. De qualquer lugar.',
+    hero_lead:'AetherFlow é seu copiloto de IA universal que executa tarefas de produtividade 24/7. Pague só pelo que usar. Premium, seguro e ultra rápido.',
+    hero_cta_primary:'Testar grátis →',hero_cta_secondary:'Ver como funciona',
+    stat_langs:'Idiomas suportados',stat_uptime:'Disponibilidade',stat_speed:'Tempo de resposta',stat_secure:'Criptografia empresarial',
+    trust_label:'A escolha de profissionais, equipes e criadores em +80 países',
+    feat_eyebrow:'Recursos',feat_title:'Uma plataforma. Oito superpoderes.',feat_sub:'Automações prontas que se adaptam ao seu fluxo, equipe e setor.',
+    f1_t:'E-mail inteligente',f1_d:'Redija, envie e responda e-mails com o tom perfeito.',
+    f2_t:'Calendário mágico',f2_d:'Agende reuniões em qualquer fuso horário.',
+    f3_t:'Documentos instantâneos',f3_d:'Relatórios, propostas e contratos premium em segundos.',
+    f4_t:'Pesquisa veloz',f4_d:'Pesquise, resuma e analise com fontes verificadas.',
+    f5_t:'Tradução nativa',f5_d:'Traduza para +100 idiomas com contexto cultural.',
+    f6_t:'Análise profunda',f6_d:'Transforme dados brutos em insights acionáveis.',
+    f7_t:'Conteúdo criativo',f7_d:'Textos, imagens e copy otimizados por canal.',
+    f8_t:'Fluxos personalizados',f8_d:'Conecte suas ferramentas favoritas em um clique.',
+    how_eyebrow:'Como funciona',how_title:'Três passos. Um resultado premium.',how_sub:'Tão simples quanto enviar uma mensagem. Tão poderoso quanto uma equipe inteira.',
+    h1_t:'Conte sua tarefa',h1_d:'Descreva no seu idioma o que você precisa fazer.',
+    h2_t:'AetherFlow executa',h2_d:'A IA planeja, executa passo a passo e verifica a qualidade.',
+    h3_t:'Receba premium',h3_d:'Receba entregues prontos em minutos, no formato que quiser.',
+    price_eyebrow:'Preços',price_title:'Pague só pelo que consome.',price_sub:'Sem assinatura. Sem letras miúdas. Carregue créditos e use quando quiser.',
+    pn1:'Inicial',pn1_unit:'créditos grátis',pn1_per:'para sempre',pn1_d:'Perfeito para testar tudo sem risco.',pn1_btn:'Começar grátis',
+    pn1_f1:'Acesso a 8 recursos',pn1_f2:'Suporte padrão',pn1_f3:'1 idioma principal',
+    popular:'Mais popular',pn2:'Pro',pn2_unit:'créditos',pn2_per:'≈ $0.15 / tarefa',pn2_save:'Economize 25%',pn2_d:'Para profissionais e pequenas equipes que automatizam todo dia.',pn2_btn:'Comprar Pro',
+    pn2_f1:'Tudo do Inicial',pn2_f2:'+ 100 idiomas',pn2_f3:'Suporte prioritário',pn2_f4:'Fluxos personalizados',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2.100',
+    pn3:'Business',pn3_unit:'créditos',pn3_per:'≈ $0.10 / tarefa',pn3_save:'Economize 50%',pn3_d:'Equipes médias que escalam sem contratar.',pn3_btn:'Comprar Business',
+    pn3_f1:'Tudo do Pro',pn3_f2:'API completa',pn3_f3:'5 contas de equipe',pn3_f4:'SLA de 99.9%',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7.200',
+    pn4:'Enterprise',pn4_unit:'créditos sob medida',pn4_b:'Personalizado',pn4_d:'Volume, integrações sob medida, equipe dedicada e treinamento.',pn4_btn:'Falar com vendas',
+    pn4_f1:'Tudo do Business',pn4_f2:'SSO e SAML',pn4_f3:'Gerente de conta',pn4_f4:'On-premise opcional',
+    uc_eyebrow:'Casos de uso',uc_title:'Feito para todos. Para tudo.',uc_sub:'Mude de aba e veja como o AetherFlow resolve seu próximo desafio.',
+    uct_free:'Freelancers',uct_emp:'Empreendedores',uct_agc:'Agências',uct_edu:'Educação',uct_ec:'E-commerce',
+    ucc1_t:'Freelancers que escalam sem contratar',ucc1_p:'Economize 10 horas por semana automatizando e-mails, propostas e relatórios.',
+    ucc1_l1:'Propostas personalizadas em 60 segundos',ucc1_l2:'Onboarding automático de clientes',ucc1_l3:'Faturamento e follow-up',ucc1_l4:'Relatórios semanais no piloto automático',
+    ucc2_t:'Empreendedores lançando rápido',ucc2_p:'Lance MVPs, valide ideias e automatize marketing sem equipe técnica.',
+    ucc2_l1:'Pesquisa de mercado instantânea',ucc2_l2:'Copy de landing em 8 idiomas',ucc2_l3:'Atendimento 24/7',ucc2_l4:'Análise competitiva semanal',
+    ucc3_t:'Agências que entregam mais, faturam mais',ucc3_p:'Multiplique a entrega sem crescer a equipe.',
+    ucc3_l1:'Briefings criativos automatizados',ucc3_l2:'Relatórios para múltiplos clientes',ucc3_l3:'Tradução simultânea de campanhas',ucc3_l4:'QA em escala',
+    ucc4_t:'Educação que alcança todos os idiomas',ucc4_p:'Crie conteúdo educacional, tutoria e avaliações adaptadas.',
+    ucc4_l1:'Planos de estudo personalizados',ucc4_l2:'Tradução acadêmica verificada',ucc4_l3:'Geração de exercícios',ucc4_l4:'Feedback instantâneo',
+    ucc5_t:'E-commerce vendendo em todos os mercados',ucc5_p:'Venda globalmente com descrições, e-mails e suporte no idioma do cliente.',
+    ucc5_l1:'Descrições multilíngues',ucc5_l2:'E-mail marketing localizado',ucc5_l3:'Atendimento automatizado',ucc5_l4:'Análise de avaliações e tendências',
+    sec_eyebrow:'Segurança',sec_title:'Sua confiança é a base. A segurança, nosso alicerce.',
+    sec1_t:'Criptografia ponta a ponta',sec1_d:'AES-256 em repouso, TLS 1.3 em trânsito.',
+    sec2_t:'Pagamentos certificados PCI DSS',sec2_d:'Stripe, Mercado Pago, PayPal, Pix e Apple Pay.',
+    sec3_t:'Infraestrutura global',sec3_d:'Servidores em 6 regiões: baixa latência e conformidade regional.',
+    faq_eyebrow:'Perguntas frequentes',faq_title:'Respondemos suas dúvidas',
+    q1:'Como funcionam os créditos?',a1:'Cada tarefa típica consome 1 crédito. Tarefas maiores podem custar mais. O preço aparece antes da execução.',
+    q2:'Posso usar no meu idioma?',a2:'Sim. Interface em 8 idiomas e IA entende +100.',
+    q3:'Quais pagamentos aceitam?',a3:'Cartões, Apple Pay, Google Pay, PayPal, Mercado Pago, Pix, SPEI, SEPA e Bizum.',
+    q4:'Meus dados estão seguros?',a4:'Sim. AES-256, GDPR/SOC2, nunca usamos seus dados para treinar modelos.',
+    q5:'Há reembolso?',a5:'Sim. 30 dias de devolução sem perguntas.',
+    final_h:'Carregue créditos em 60 segundos.<br>Automatize o resto da sua vida.',final_p:'Sem cartão para começar. 5 créditos grátis para sempre.',final_cta:'Comprar créditos →',
+    foot_brand:'Automação IA universal. Paga por uso, premium e segura, em qualquer idioma.',
+    foot_p:'Produto',foot_p1:'Recursos',foot_p2:'Preços',foot_p3:'API',foot_p4:'Status do serviço',
+    foot_co:'Empresa',foot_co1:'Sobre nós',foot_co2:'Blog',foot_co3:'Carreiras',foot_co4:'Contato',
+    foot_l:'Legal',foot_l1:'Termos',foot_l2:'Privacidade',foot_l3:'Cookies',foot_l4:'Segurança',
+    foot_copy:'© 2025 AetherFlow · Feito com IA para o mundo · v1.0',
+    modal_title:'Ótima escolha!',modal_body:'Você está a um passo de destravar a automação premium. Demonstração: na produção, este botão abre o Stripe Checkout de forma segura.',
+    modal_primary:'Ir para o Checkout',modal_secondary:'Continuar explorando',
+  },
+  fr:{
+    nav_features:'Fonctions',nav_how:'Comment ça marche',nav_pricing:'Tarifs',nav_faq:'FAQ',nav_cta:'Commencer',
+    hero_eyebrow:'Nouveau · Paiement à l’usage · Sans abonnement',
+    hero_h1_1:'Automatisez le monde.',hero_h1_2:'Dans toutes les langues. Partout.',
+    hero_lead:'AetherFlow est votre copilote IA universel qui exécute des tâches de productivité 24/7. Payez uniquement ce que vous utilisez. Premium, sécurisé, ultra rapide.',
+    hero_cta_primary:'Essayer gratuitement →',hero_cta_secondary:'Voir comment ça marche',
+    stat_langs:'Langues prises en charge',stat_uptime:'Disponibilité',stat_speed:'Temps de réponse',stat_secure:'Chiffrement entreprise',
+    trust_label:'Choisi par des professionnels, équipes et créateurs dans +80 pays',
+    feat_eyebrow:'Fonctions',feat_title:'Une plateforme. Huit superpouvoirs.',feat_sub:'Automatisations prêtes à l’emploi, adaptées à votre flux, équipe et secteur.',
+    f1_t:'Email intelligent',f1_d:'Rédigez, envoyez et répondez avec le ton parfait.',
+    f2_t:'Calendrier magique',f2_d:'Planifiez réunions et rappels dans tous les fuseaux horaires.',
+    f3_t:'Documents instantanés',f3_d:'Rapports, propositions et contrats premium en secondes.',
+    f4_t:'Recherche rapide',f4_d:'Recherchez, résumez et analysez avec des sources vérifiées.',
+    f5_t:'Traduction native',f5_d:'+100 langues avec nuance culturelle.',
+    f6_t:'Analyse approfondie',f6_d:'Transformez vos données en insights actionnables.',
+    f7_t:'Contenu créatif',f7_d:'Textes, images et copy optimisés par canal.',
+    f8_t:'Flux personnalisés',f8_d:'Connectez vos outils favoris en un clic.',
+    how_eyebrow:'Comment ça marche',how_title:'Trois étapes. Un résultat premium.',how_sub:'Aussi simple qu’un message. Aussi puissant qu’une équipe entière.',
+    h1_t:'Décrivez la tâche',h1_d:'Dans votre langue, dites ce qu’il faut faire.',
+    h2_t:'AetherFlow exécute',h2_d:'L’IA planifie, exécute pas à pas et vérifie la qualité.',
+    h3_t:'Recevez le premium',h3_d:'Des livrables prêts à l’emploi en minutes.',
+    price_eyebrow:'Tarifs',price_title:'Payez uniquement ce que vous consommez.',price_sub:'Pas d’abonnement. Pas de petits caractères. Chargez des crédits et utilisez-les quand vous voulez.',
+    pn1:'Starter',pn1_unit:'crédits gratuits',pn1_per:'pour toujours',pn1_d:'Parfait pour tester sans risque.',pn1_btn:'Commencer gratuitement',
+    pn1_f1:'Accès à 8 fonctions',pn1_f2:'Support standard',pn1_f3:'1 langue principale',
+    popular:'Le plus populaire',pn2:'Pro',pn2_unit:'crédits',pn2_per:'≈ $0.15 / tâche',pn2_save:'Économisez 25%',pn2_d:'Pour les pros et petites équipes qui automatisent au quotidien.',pn2_btn:'Acheter Pro',
+    pn2_f1:'Tout du Starter',pn2_f2:'+ 100 langues',pn2_f3:'Support prioritaire',pn2_f4:'Flux personnalisés',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2 100',
+    pn3:'Business',pn3_unit:'crédits',pn3_per:'≈ $0.10 / tâche',pn3_save:'Économisez 50%',pn3_d:'Équipes de taille moyenne qui scalent sans recruter.',pn3_btn:'Acheter Business',
+    pn3_f1:'Tout du Pro',pn3_f2:'API complète',pn3_f3:'5 sièges équipe',pn3_f4:'SLA 99.9%',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7 200',
+    pn4:'Enterprise',pn4_unit:'crédits sur mesure',pn4_b:'Sur mesure',pn4_d:'Volume, intégrations sur mesure, équipe dédiée et formation.',pn4_btn:'Parler au commercial',
+    pn4_f1:'Tout du Business',pn4_f2:'SSO & SAML',pn4_f3:'Account manager',pn4_f4:'On-premise en option',
+    uc_eyebrow:'Cas d’usage',uc_title:'Conçu pour tous. Pour tout.',uc_sub:'Changez d’onglet pour découvrir comment AetherFlow résout votre prochain défi.',
+    uct_free:'Freelances',uct_emp:'Entrepreneurs',uct_agc:'Agences',uct_edu:'Éducation',uct_ec:'E-commerce',
+    ucc1_t:'Freelances qui scalent sans recruter',ucc1_p:'Économisez 10 h/semaine en automatisant emails, propositions, contrats et rapports.',
+    ucc1_l1:'Propositions perso en 60 s',ucc1_l2:'Onboarding automatique',ucc1_l3:'Facturation et relances',ucc1_l4:'Rapports hebdo automatiques',
+    ucc2_t:'Entrepreneurs qui lancent vite',ucc2_p:'Lancez des MVPs, validez des idées, automatisez le marketing sans équipe technique.',
+    ucc2_l1:'Étude de marché instantanée',ucc2_l2:'Copy de landing en 8 langues',ucc2_l3:'Support 24/7',ucc2_l4:'Analyse concurrentielle',
+    ucc3_t:'Agences qui livrent plus',ucc3_p:'Multipliez la capacité de livraison sans agrandir l’équipe.',
+    ucc3_l1:'Briefs créatifs automatisés',ucc3_l2:'Rapports multi-clients',ucc3_l3:'Traduction simultanée',ucc3_l4:'QA à l’échelle',
+    ucc4_t:'Éducation pour toutes les langues',ucc4_p:'Contenu pédagogique, tutorat et évaluations adaptés à chaque étudiant.',
+    ucc4_l1:'Plans d’étude personnalisés',ucc4_l2:'Traduction académique vérifiée',ucc4_l3:'Génération d’exercices',ucc4_l4:'Feedback instantané',
+    ucc5_t:'E-commerce qui vend partout',ucc5_p:'Vendez globalement avec descriptions, emails et support dans la langue du client.',
+    ucc5_l1:'Descriptions produits multilingues',ucc5_l2:'Email marketing localisé',ucc5_l3:'Support client automatisé',ucc5_l4:'Analyse d’avis',
+    sec_eyebrow:'Sécurité',sec_title:'Votre confiance est la base. La sécurité, notre fondement.',
+    sec1_t:'Chiffrement de bout en bout',sec1_d:'AES-256 au repos, TLS 1.3 en transit.',
+    sec2_t:'Paiements certifiés PCI DSS',sec2_d:'Stripe, Mercado Pago, PayPal, Pix et Apple Pay.',
+    sec3_t:'Infrastructure globale',sec3_d:'Serveurs dans 6 régions : faible latence et conformité.',
+    faq_eyebrow:'Questions fréquentes',faq_title:'Vos questions, nos réponses',
+    q1:'Comment marchent les crédits ?',a1:'Chaque tâche typique = 1 crédit. Le prix exact s’affiche avant exécution.',
+    q2:'Puis-je l’utiliser dans ma langue ?',a2:'Oui. Interface en 8 langues, IA en comprend +100.',
+    q3:'Quels moyens de paiement ?',a3:'Cartes, Apple Pay, Google Pay, PayPal, Mercado Pago, Pix, SPEI, SEPA, Bizum.',
+    q4:'Mes données sont-elles en sécurité ?',a4:'Oui. AES-256, GDPR/SOC2, jamais utilisées pour entraîner nos modèles.',
+    q5:'Y a-t-il un remboursement ?',a5:'Oui. 30 jours sans questions.',
+    final_h:'Chargez vos crédits en 60 secondes.<br>Automatisez le reste de votre vie.',final_p:'Sans carte pour commencer. 5 crédits gratuits pour toujours.',final_cta:'Acheter des crédits →',
+    foot_brand:'Automatisation IA universelle. Paiement à l’usage, premium et sécurisée, dans toutes les langues.',
+    foot_p:'Produit',foot_p1:'Fonctions',foot_p2:'Tarifs',foot_p3:'API',foot_p4:'Statut du service',
+    foot_co:'Société',foot_co1:'À propos',foot_co2:'Blog',foot_co3:'Carrières',foot_co4:'Contact',
+    foot_l:'Légal',foot_l1:'CGU',foot_l2:'Confidentialité',foot_l3:'Cookies',foot_l4:'Sécurité',
+    foot_copy:'© 2025 AetherFlow · Conçu avec l’IA pour le monde · v1.0',
+    modal_title:'Excellent choix !',modal_body:'Vous êtes à un pas de l’automatisation premium. Démo : en production, ce bouton ouvre Stripe Checkout en toute sécurité.',
+    modal_primary:'Aller au Checkout',modal_secondary:'Continuer à explorer',
+  },
+  de:{
+    nav_features:'Funktionen',nav_how:'So funktioniert es',nav_pricing:'Preise',nav_faq:'FAQ',nav_cta:'Starten',
+    hero_eyebrow:'Neu · Pay-per-use · Kein Abo',
+    hero_h1_1:'Automatisieren Sie die Welt.',hero_h1_2:'In jeder Sprache. Von überall.',
+    hero_lead:'AetherFlow ist Ihr universeller KI-Copilot, der Produktivitätsaufgaben rund um die Uhr erledigt. Zahlen Sie nur, was Sie nutzen. Premium, sicher, ultraschnell.',
+    hero_cta_primary:'Gratis testen →',hero_cta_secondary:'Wie es funktioniert',
+    stat_langs:'Unterstützte Sprachen',stat_uptime:'Verfügbarkeit',stat_speed:'Antwortzeit',stat_secure:'Enterprise-Verschlüsselung',
+    trust_label:'Die Wahl von Profis, Teams und Creators in +80 Ländern',
+    feat_eyebrow:'Funktionen',feat_title:'Eine Plattform. Acht Superkräfte.',feat_sub:'Sofort einsetzbare Automatisierungen für Ihren Workflow, Ihr Team und Ihre Branche.',
+    f1_t:'Intelligente E-Mail',f1_d:'Verfassen, senden und antworten Sie automatisch mit perfektem Ton.',
+    f2_t:'Magischer Kalender',f2_d:'Planen Sie Meetings in jeder Zeitzone.',
+    f3_t:'Sofortige Dokumente',f3_d:'Premium-Berichte, Angebote und Verträge in Sekunden.',
+    f4_t:'Schnelle Recherche',f4_d:'Recherche, Zusammenfassung und Analyse mit verifizierten Quellen.',
+    f5_t:'Native Übersetzung',f5_d:'+100 Sprachen mit kultureller Nuance.',
+    f6_t:'Tiefenanalyse',f6_d:'Rohdaten in umsetzbare Erkenntnisse verwandeln.',
+    f7_t:'Kreative Inhalte',f7_d:'Texte, Bilder und Copy kanaloptimiert.',
+    f8_t:'Eigene Flows',f8_d:'Verbinden Sie Ihre Lieblings-Tools mit einem Klick.',
+    how_eyebrow:'So funktioniert es',how_title:'Drei Schritte. Ein Premium-Ergebnis.',how_sub:'So einfach wie eine Nachricht. So mächtig wie ein ganzes Team.',
+    h1_t:'Beschreiben Sie die Aufgabe',h1_d:'Sagen Sie uns in Ihrer Sprache, was zu tun ist.',
+    h2_t:'AetherFlow übernimmt',h2_d:'Die KI plant, führt Schritt für Schritt aus und prüft die Qualität.',
+    h3_t:'Premium erhalten',h3_d:'Fertige Ergebnisse in Minuten, in Ihrem Format.',
+    price_eyebrow:'Preise',price_title:'Zahlen Sie nur, was Sie verbrauchen.',price_sub:'Kein Abo. Kein Kleingedrucktes. Credits laden, jederzeit nutzen.',
+    pn1:'Starter',pn1_unit:'Gratis-Credits',pn1_per:'für immer',pn1_d:'Perfekt zum risikofreien Testen.',pn1_btn:'Gratis starten',
+    pn1_f1:'Zugang zu 8 Funktionen',pn1_f2:'Standard-Support',pn1_f3:'1 Hauptsprache',
+    popular:'Am beliebtesten',pn2:'Pro',pn2_unit:'Credits',pn2_per:'≈ $0.15 / Aufgabe',pn2_save:'25% sparen',pn2_d:'Für Profis und kleine Teams, die täglich automatisieren.',pn2_btn:'Pro kaufen',
+    pn2_f1:'Alles aus Starter',pn2_f2:'+ 100 Sprachen',pn2_f3:'Priority-Support',pn2_f4:'Eigene Flows',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2.100',
+    pn3:'Business',pn3_unit:'Credits',pn3_per:'≈ $0.10 / Aufgabe',pn3_save:'50% sparen',pn3_d:'Mittelgroße Teams, die ohne Neueinstellungen skalieren.',pn3_btn:'Business kaufen',
+    pn3_f1:'Alles aus Pro',pn3_f2:'Volle API',pn3_f3:'5 Team-Sitze',pn3_f4:'99.9% SLA',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7.200',
+    pn4:'Enterprise',pn4_unit:'maßgeschneiderte Credits',pn4_b:'Individuell',pn4_d:'Volumen, maßgeschneiderte Integrationen, dediziertes Team und Schulung.',pn4_btn:'Mit Vertrieb sprechen',
+    pn4_f1:'Alles aus Business',pn4_f2:'SSO & SAML',pn4_f3:'Account Manager',pn4_f4:'On-premise optional',
+    uc_eyebrow:'Anwendungsfälle',uc_title:'Für alle gemacht. Für alles.',uc_sub:'Tab wechseln und entdecken, wie AetherFlow Ihre nächste Herausforderung löst.',
+    uct_free:'Freelancer',uct_emp:'Unternehmer',uct_agc:'Agenturen',uct_edu:'Bildung',uct_ec:'E-commerce',
+    ucc1_t:'Freelancer skalieren ohne Einstellung',ucc1_p:'Sparen Sie 10 Std./Woche durch automatisierte E-Mails, Angebote, Verträge und Berichte.',
+    ucc1_l1:'Personalisierte Angebote in 60 s',ucc1_l2:'Automatisches Onboarding',ucc1_l3:'Rechnungen & Follow-up',ucc1_l4:'Wochenberichte im Autopilot',
+    ucc2_t:'Unternehmer launchen schnell',ucc2_p:'MVPs starten, Ideen validieren, Marketing automatisieren – ohne Tech-Team.',
+    ucc2_l1:'Sofortige Marktrecherche',ucc2_l2:'Landing-Copy in 8 Sprachen',ucc2_l3:'24/7 Support',ucc2_l4:'Wöchentliche Wettbewerbsanalyse',
+    ucc3_t:'Agenturen liefern mehr, abrechnen mehr',ucc3_p:'Lieferkapazität multiplizieren, ohne das Team zu vergrößern.',
+    ucc3_l1:'Automatisierte Creative Briefs',ucc3_l2:'Berichte für mehrere Kunden',ucc3_l3:'Simultane Kampagnen-Übersetzung',ucc3_l4:'QA im großen Stil',
+    ucc4_t:'Bildung erreicht jede Sprache',ucc4_p:'Lerninhalte, Tutoring und Bewertungen für jeden Schüler zugeschnitten.',
+    ucc4_l1:'Personalisierte Lernpläne',ucc4_l2:'Verifizierte akademische Übersetzung',ucc4_l3:'Aufgabengenerierung',ucc4_l4:'Sofortiges Feedback',
+    ucc5_t:'E-commerce verkauft überall',ucc5_p:'Global verkaufen mit Beschreibungen, E-Mails und Support in der Sprache des Kunden.',
+    ucc5_l1:'Mehrsprachige Produkttexte',ucc5_l2:'Lokalisierte E-Mail-Marketing',ucc5_l3:'Automatischer Kundensupport',ucc5_l4:'Bewertungs- & Trend-Analyse',
+    sec_eyebrow:'Sicherheit',sec_title:'Ihr Vertrauen ist die Basis. Sicherheit ist unser Fundament.',
+    sec1_t:'Ende-zu-Ende-Verschlüsselung',sec1_d:'AES-256 ruhend, TLS 1.3 in Übertragung.',
+    sec2_t:'PCI DSS zertifizierte Zahlungen',sec2_d:'Stripe, Mercado Pago, PayPal, Pix und Apple Pay.',
+    sec3_t:'Globale Infrastruktur',sec3_d:'Server in 6 Regionen: niedrige Latenz, regionale Compliance.',
+    faq_eyebrow:'Häufige Fragen',faq_title:'Ihre Fragen, beantwortet',
+    q1:'Wie funktionieren Credits?',a1:'Eine typische Aufgabe kostet 1 Credit. Längere Aufgaben können mehr kosten. Der exakte Preis wird vor Ausführung angezeigt.',
+    q2:'Kann ich es in meiner Sprache nutzen?',a2:'Ja. Benutzeroberfläche in 8 Sprachen, KI versteht +100.',
+    q3:'Welche Zahlungsmethoden?',a3:'Karten, Apple Pay, Google Pay, PayPal, Mercado Pago, Pix, SPEI, SEPA, Bizum.',
+    q4:'Sind meine Daten sicher?',a4:'Absolut. AES-256, GDPR/SOC2, niemals zum Trainieren verwendet.',
+    q5:'Gibt es eine Rückerstattung?',a5:'Ja. 30 Tage ohne Fragen.',
+    final_h:'Credits in 60 Sekunden laden.<br>Den Rest Ihres Lebens automatisieren.',final_p:'Keine Karte zum Start. 5 Gratis-Credits für immer.',final_cta:'Credits kaufen →',
+    foot_brand:'Universelle KI-Automatisierung. Pay-per-use, premium und sicher, in jeder Sprache.',
+    foot_p:'Produkt',foot_p1:'Funktionen',foot_p2:'Preise',foot_p3:'API',foot_p4:'Service-Status',
+    foot_co:'Unternehmen',foot_co1:'Über uns',foot_co2:'Blog',foot_co3:'Karriere',foot_co4:'Kontakt',
+    foot_l:'Rechtliches',foot_l1:'AGB',foot_l2:'Datenschutz',foot_l3:'Cookies',foot_l4:'Sicherheit',
+    foot_copy:'© 2025 AetherFlow · Mit KI für die Welt gemacht · v1.0',
+    modal_title:'Ausgezeichnete Wahl!',modal_body:'Sie sind einen Schritt von Premium-Automatisierung entfernt. Demo: in Produktion öffnet dieser Button Stripe Checkout sicher.',
+    modal_primary:'Zum Checkout',modal_secondary:'Weiter erkunden',
+  },
+  zh:{
+    nav_features:'功能',nav_how:'工作原理',nav_pricing:'定价',nav_faq:'常见问题',nav_cta:'开始',
+    hero_eyebrow:'全新 · 按使用付费 · 无需订阅',
+    hero_h1_1:'自动化整个世界。',hero_h1_2:'任何语言。任何地点。',
+    hero_lead:'AetherFlow 是您的通用 AI 副驾驶，24/7 执 行生产力任务。按用量付费。高级、安全、超快。',
+    hero_cta_primary:'免费试用 →',hero_cta_secondary:'了解工作原理',
+    stat_langs:'支持语言',stat_uptime:'可用性',stat_speed:'响应时间',stat_secure:'企业级加密',
+    trust_label:'全球 80+ 国家专业人士、团队和创作者的选择',
+    feat_eyebrow:'功能',feat_title:'一个平台。八种超能力。',feat_sub:'开箱即用的自动化,适应您的工作流程、团队和行业。',
+    f1_t:'智能邮件',f1_d:'自动撰写、发送和回复,语气完美。',
+    f2_t:'魔法日历',f2_d:'跨任何时区安排会议和提醒。',
+    f3_t:'即时文档',f3_d:'几秒内生成高级报告、提案和合同。',
+    f4_t:'快速研究',f4_d:'研究、总结和分析,带验证来源。',
+    f5_t:'原生翻译',f5_d:'100+ 语言翻译,具有文化细微差别。',
+    f6_t:'深度分析',f6_d:'将原始数据转化为可行的洞察。',
+    f7_t:'创意内容',f7_d:'针对每个渠道优化的文本、图像和文案。',
+    f8_t:'自定义流程',f8_d:'一键连接您喜爱的工具。',
+    how_eyebrow:'工作原理',how_title:'三个步骤。一个高级结果。',how_sub:'像发消息一样简单。像整个团队一样强大。',
+    h1_t:'告诉我们任务',h1_d:'用您自己的语言描述需要完成的事情。',
+    h2_t:'AetherFlow 执行',h2_d:'AI 逐步规划、执行并验证质量。',
+    h3_t:'获得高级交付',h3_d:'几分钟内获得随时可用的成果。',
+    price_eyebrow:'定价',price_title:'只为您的使用付费。',price_sub:'无订阅。无小字。随时充值和使用。',
+    pn1:'入门版',pn1_unit:'免费积分',pn1_per:'永久',pn1_d:'完美无风险地测试所有功能。',pn1_btn:'免费开始',
+    pn1_f1:'访问 8 个功能',pn1_f2:'标准支持',pn1_f3:'1 种主要语言',
+    popular:'最受欢迎',pn2:'专业版',pn2_unit:'积分',pn2_per:'≈ $0.15 / 任务',pn2_save:'节省 25%',pn2_d:'面向日常自动化的小型团队和专业人士。',pn2_btn:'购买专业版',
+    pn2_f1:'入门版所有功能',pn2_f2:'+ 100 种语言',pn2_f3:'优先支持',pn2_f4:'自定义流程',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2,100',
+    pn3:'商业版',pn3_unit:'积分',pn3_per:'≈ $0.10 / 任务',pn3_save:'节省 50%',pn3_d:'无需新招聘即可扩展的中型团队。',pn3_btn:'购买商业版',
+    pn3_f1:'专业版所有功能',pn3_f2:'完整 API',pn3_f3:'5 个团队席位',pn3_f4:'99.9% SLA',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7,200',
+    pn4:'企业版',pn4_unit:'定制积分',pn4_b:'定制',pn4_d:'定制集成、专属团队和培训。',pn4_btn:'联系销售',
+    pn4_f1:'商业版所有功能',pn4_f2:'SSO 与 SAML',pn4_f3:'客户经理',pn4_f4:'可本地部署',
+    uc_eyebrow:'应用案例',uc_title:'为所有人设计。为一切设计。',uc_sub:'切换标签,看看 AetherFlow 如何解决您的下一个挑战。',
+    uct_free:'自由职业者',uct_emp:'创业者',uct_agc:'代理机构',uct_edu:'教育',uct_ec:'电商',
+    ucc1_t:'无需招聘即可扩展的自由职业者',ucc1_p:'通过自动化邮件、提案、合同和报告每周节省 10 小时。',
+    ucc1_l1:'60 秒内个性化提案',ucc1_l2:'自动客户入职',ucc1_l3:'开票与跟进',ucc1_l4:'自动每周报告',
+    ucc2_t:'快速启动的创业者',ucc2_p:'无需技术团队即可发布 MVP、验证想法并自动化营销。',
+    ucc2_l1:'即时市场调研',ucc2_l2:'8 种语言的落地页文案',ucc2_l3:'24/7 客户支持',ucc2_l4:'每周竞品分析',
+    ucc3_t:'交付更多、收费更多的代理机构',ucc3_p:'在不扩大团队的情况下倍增交付能力。',
+    ucc3_l1:'自动化创意简报',ucc3_l2:'多客户报告',ucc3_l3:'活动同步翻译',ucc3_l4:'规模化 QA',
+    ucc4_t:'教育覆盖每种语言',ucc4_p:'为每位学生定制学习内容、辅导和评估。',
+    ucc4_l1:'个性化学习计划',ucc4_l2:'经验证的学术翻译',ucc4_l3:'题目生成',ucc4_l4:'即时反馈',
+    ucc5_t:'电商销往每个市场',ucc5_p:'以客户的语言提供描述、邮件和支持,全球销售。',
+    ucc5_l1:'多语言产品描述',ucc5_l2:'本地化邮件营销',ucc5_l3:'自动化客户支持',ucc5_l4:'评论与趋势分析',
+    sec_eyebrow:'安全',sec_title:'您的信任是基础。安全是我们的根基。',
+    sec1_t:'端到端加密',sec1_d:'静态 AES-256,传输 TLS 1.3。',
+    sec2_t:'PCI DSS 认证支付',sec2_d:'Stripe、 Mercado Pago、 PayPal、 Pix 和 Apple Pay。',
+    sec3_t:'全球基础设施',sec3_d:'6 个区域的服务器:低延迟与本地化合规。',
+    faq_eyebrow:'常见问题',faq_title:'为您解答疑问',
+    q1:'积分如何工作?',a1:'每项典型任务消耗 1 积分。更长的任务可能更多。',
+    q2:'我可以使用自己的语言吗?',a2:'可以。界面 8 种语言,AI 理解 100+。',
+    q3:'接受哪些支付方式?',a3:'卡、Apple Pay、Google Pay、PayPal、Mercado Pago、Pix、SPEI、SEPA、Bizum。',
+    q4:'我的数据安全吗?',a4:'绝对安全。AES-256、GDPR/SOC2 合规。',
+    q5:'有退款吗?',a5:'有,30 天无理由退款。',
+    final_h:'60 秒充值积分。<br>自动化您的余生。',final_p:'无需信用卡开始。永久免费 5 积分。',final_cta:'购买积分 →',
+    foot_brand:'通用 AI 自动化。按使用付费,高级安全,任何语言。',
+    foot_p:'产品',foot_p1:'功能',foot_p2:'定价',foot_p3:'API',foot_p4:'服务状态',
+    foot_co:'公司',foot_co1:'关于我们',foot_co2:'博客',foot_co3:'招聘',foot_co4:'联系',
+    foot_l:'法律',foot_l1:'条款',foot_l2:'隐私',foot_l3:'Cookie',foot_l4:'安全',
+    foot_copy:'© 2025 AetherFlow · 用 AI 为世界而造 · v1.0',
+    modal_title:'极好的选择!',modal_body:'您离高级自动化只差一步。演示:在生产中此按钮安全地打开 Stripe Checkout。',
+    modal_primary:'前往结账',modal_secondary:'继续探索',
+  },
+  ja:{
+    nav_features:'機能',nav_how:'使い方',nav_pricing:'料金',nav_faq:'FAQ',nav_cta:'はじめる',
+    hero_eyebrow:'新登場 · 従量課金 · サブスク不要',
+    hero_h1_1:'世界を自動化。',hero_h1_2:'あらゆる言語で。どこでも。',
+    hero_lead:'AetherFlow は、生産性タスクを 24 時間体制で実行する万能 AI コパイロットです。使った分だけお支払い。プレミアム、安全、超高速。',
+    hero_cta_primary:'無料で試す →',hero_cta_secondary:'使い方を見る',
+    stat_langs:'対応言語数',stat_uptime:'稼働率',stat_speed:'応答時間',stat_secure:'エンタープライズ暗号化',
+    trust_label:'80か国以上のプロフェッショナル、チーム、クリエイターに選ばれています',
+    feat_eyebrow:'機能',feat_title:'ひとつのプラットフォーム。八つの超能力。',feat_sub:'ワークフロー、チーム、業界に対応する即戦力の自動化。',
+    f1_t:'スマートメール',f1_d:'完璧なトーンで自動作成・送信・返信。',
+    f2_t:'マジックカレンダー',f2_d:'あらゆるタイムゾーンで会議やリマインダーをスケジュール。',
+    f3_t:'即座のドキュメント',f3_d:'数秒でプレミアムレポート、提案、契約書。',
+    f4_t:'高速リサーチ',f4_d:'検証済みソースで調査・要約・分析。',
+    f5_t:'ネイティブ翻訳',f5_d:'100以上の言語を文化的ニュアンスで翻訳。',
+    f6_t:'ディープ分析',f6_d:'生データを actionable な洞察へ。',
+    f7_t:'クリエイティブコンテンツ',f7_t2:'',f7_d:'チャネル最適化されたテキスト、画像、コピー。',
+    f8_t:'カスタムフロー',f8_d:'お気に入りツールをワンクリックで接続。',
+    how_eyebrow:'使い方',how_title:'3 ステップで、プレミアムな成果を。',how_sub:'メッセージ送信と同じくらい簡単。チーム全体と同じくらい強力。',
+    h1_t:'タスクを伝える',h1_d:'あなたの言葉で、何をしてほしいかを伝える。',
+    h2_t:'AetherFlow が実行',h2_d:'AI が計画し、ステップごとに実行し、品質を検証。',
+    h3_t:'プレミアムを受け取る',h3_d:'分単位で、すぐに使える成果物を希望の形式で。',
+    price_eyebrow:'料金',price_title:'使った分だけお支払い。',price_sub:'サブスクなし。細字なし。クレジットをロードして好きな時に使う。',
+    pn1:'スターター',pn1_unit:'無料クレジット',pn1_per:'永久',pn1_d:'リスクなしで全機能を試すのに最適。',pn1_btn:'無料で開始',
+    pn1_f1:'8 機能にアクセス',pn1_f2:'標準サポート',pn1_f3:'メイン言語 1 つ',
+    popular:'一番人気',pn2:'プロ',pn2_unit:'クレジット',pn2_per:'≈ $0.15 / タスク',pn2_save:'25% お得',pn2_d:'毎日自動化するプロフェッショナルと小規模チーム向け。',pn2_btn:'プロを購入',
+    pn2_f1:'スターターの全機能',pn2_f2:'+ 100 言語',pn2_f3:'優先サポート',pn2_f4:'カスタムフロー',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2,100',
+    pn3:'ビジネス',pn3_unit:'クレジット',pn3_per:'≈ $0.10 / タスク',pn3_save:'50% お得',pn3_d:'採用を増やさずスケールする中規模チーム向け。',pn3_btn:'ビジネスを購入',
+    pn3_f1:'プロの全機能',pn3_f2:'完全 API',pn3_f3:'5 チームシート',pn3_f4:'99.9% SLA',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7,200',
+    pn4:'エンタープライズ',pn4_unit:'カスタムクレジット',pn4_b:'カスタム',pn4_d:'ボリューム、カスタム統合、専任チームと研修。',pn4_btn:'営業に相談',
+    pn4_f1:'ビジネスの全機能',pn4_f2:'SSO & SAML',pn4_f3:'アカウントマネージャー',pn4_f4:'オンプレ対応',
+    uc_eyebrow:'ユースケース',uc_title:'すべての人のために。すべてのことのために。',uc_sub:'タブを切り替えて、AetherFlow が次の課題をどう解決するかを発見してください。',
+    uct_free:'フリーランス',uct_emp:'起業家',uct_agc:'代理店',uct_edu:'教育',uct_ec:'e コマース',
+    ucc1_t:'採用せずにスケールするフリーランス',ucc1_p:'メール、提案、契約、レポートを自動化し週 10 時間節約。',
+    ucc1_l1:'60 秒でパーソナライズ提案',ucc1_l2:'自動クライアント onboarding',ucc1_l3:'請求とフォローアップ',ucc1_l4:'自動週次レポート',
+    ucc2_t:'高速でローンチする起業家',ucc2_p:'技術チームなしで MVP、検証、マーケティング自動化。',
+    ucc2_l1:'即時市場調査',ucc2_l2:'8 言語の LP コピー',ucc2_l3:'24/7 サポート',ucc2_l4:'週次競合分析',
+    ucc3_t:'より多くを提供し請求する代理店',ucc3_p:'チームを拡大せずにデリバリー能力を倍増。',
+    ucc3_l1:'自動クリエイティブブリーフ',ucc3_l2:'マルチクライアントレポート',ucc3_l3:'キャンペーン同時翻訳',ucc3_l4:'スケール QA',
+    ucc4_t:'全言語に届く教育',ucc4_p:'学生ごとの学習コンテンツ、チュートリング、評価を作成。',
+    ucc4_l1:'パーソナライズ学習プラン',ucc4_l2:'検証済み学術翻訳',ucc4_l3:'問題生成',ucc4_l4:'即時フィードバック',
+    ucc5_t:'すべての市場で売る e コマース',ucc5_p:'商品、説明、メール、サポートを顧客の言語でグローバル販売。',
+    ucc5_l1:'多言語商品説明',ucc5_l2:'ローカライズメール',ucc5_l3:'自動カスタマーサポート',ucc5_l4:'レビュー・トレンド分析',
+    sec_eyebrow:'セキュリティ',sec_title:'信頼が基礎。セキュリティが地盤です。',
+    sec1_t:'エンドツーエンド暗号化',sec1_d:'保存時 AES-256、転送時 TLS 1.3。',
+    sec2_t:'PCI DSS 認定決済',sec2_d:'Stripe、 Mercado Pago、 PayPal、 Pix、 Apple Pay。',
+    sec3_t:'グローバルインフラ',sec3_d:'6 リージョンサーバー:低遅延と地域コンプライアンス。',
+    faq_eyebrow:'よくある質問',faq_title:'あなたの疑問にお答えします',
+    q1:'クレジットの仕組みは?',a1:'標準タスクは 1 クレジット。長いタスクはそれ以上も。正確な価格は実行前に表示されます。',
+    q2:'自分の言語で使える?',a2:'はい。UI は 8 言語、AI は 100 以上を理解。',
+    q3:'支払方法は?',a3:'カード、Apple Pay、Google Pay、PayPal、Mercado Pago、Pix、SPEI、SEPA、Bizum。',
+    q4:'データは安全?',a4:'はい。AES-256、GDPR/SOC2、モデル訓練には使いません。',
+    q5:'返金はある?',a5:'はい。30 日無条件返金。',
+    final_h:'60 秒でクレジットをロード。<br>残りの人生を自動化。',final_p:'スタートにクレカ不要。永遠に 5 無料クレジット。',final_cta:'クレジットを購入 →',
+    foot_brand:'万能 AI 自動化。従量課金、プレミアム安全、あらゆる言語。',
+    foot_p:'プロダクト',foot_p1:'機能',foot_p2:'料金',foot_p3:'API',foot_p4:'サービス状況',
+    foot_co:'会社',foot_co1:'私たちについて',foot_co2:'ブログ',foot_co3:'採用',foot_co4:'お問い合わせ',
+    foot_l:'法的事項',foot_l1:'利用規約',foot_l2:'プライバシー',foot_l3:'Cookie',foot_l4:'セキュリティ',
+    foot_copy:'© 2025 AetherFlow · 世界の為に AI で · v1.0',
+    modal_title:'素晴らしい選択!',modal_body:'プレミアム自動化まであと一歩。デモ:本番ではこのボタンがセキュアに Stripe Checkout を開きます。',
+    modal_primary:'チェックアウトへ',modal_secondary:'探索を続ける',
+  },
+  ar:{
+    nav_features:'الميزات',nav_how:'كيف يعمل',nav_pricing:'الأسعار',nav_faq:'الأسئلة',nav_cta:'ابدأ',
+    hero_eyebrow:'جديد · ادفع عند الاستخدام · بدون اشتراك',
+    hero_h1_1:'أتمت العالم.',hero_h1_2:'بأي لغة. من أي مكان.',
+    hero_lead:'AetherFlow هو مساعدك الذكي الشامل الذي ينفذ مهام الإنتاجية على مدار الساعة. ادفع فقط مقابل ما تستخدمه. متميز، آمن، فائق السرعة.',
+    hero_cta_primary:'جرّب مجانًا →',hero_cta_secondary:'شاهد كيف يعمل',
+    stat_langs:'اللغات المدعومة',stat_uptime:'وقت التشغيل',stat_speed:'وقت الاستجابة',stat_secure:'تشفير مؤسسي',
+    trust_label:'اختيار المحترفين والفرق والمبدعين في أكثر من 80 دولة',
+    feat_eyebrow:'الميزات',feat_title:'منصة واحدة. ثماني قوى خارقة.',feat_sub:'أتمتة جاهزة للاستخدام تتناسب مع سير عملك وفريقك وقطاعك.',
+    f1_t:'بريد ذكي',f1_d:'اكتب وأرِد وأجب تلقائيًا بالنبرة المثالية.',
+    f2_t:'تقويم سحري',f2_d:'جدولة الاجتماعات في جميع المناطق الزمنية.',
+    f3_t:'وثائق فورية',f3_d:'تقارير وعروض وعقود متميزة في ثوانٍ.',
+    f4_t:'بحث سريع',f4_d:'ابحث ولخّص وحلّل بمصادر موثوقة.',
+    f5_t:'ترجمة أصلية',f5_d:'ترجم إلى +100 لغة بفروق ثقافية دقيقة.',
+    f6_t:'تحليل عميق',f6_d:'حوّل البيانات الخام إلى رؤى قابلة للتنفيذ.',
+    f7_t:'محتوى إبداعي',f7_d:'نصوص وصور ونسخ محسّنة لكل قناة.',
+    f8_t:'تدفقات مخصصة',f8_d:'اربط أدواتك المفضلة بنقرة واحدة.',
+    how_eyebrow:'كيف يعمل',how_title:'ثلاث خطوات. نتيجة متميزة.',how_sub:'بسيط مثل إرسال رسالة. قوي كفريق كامل.',
+    h1_t:'أخبرنا بالمهمة',h1_d:'اوصف بلغة ما تريد إنجازه.',
+    h2_t:'AetherFlow ينفّذ',h2_d:'الذكاء الاصطناعي يخطط وينفذ ويتحقق من الجودة.',
+    h3_t:'استلم النتيجة المتميزة',h3_d:'مخرجات جاهزة للاستخدام خلال دقائق.',
+    price_eyebrow:'الأسعار',price_title:'ادفع فقط مقابل ما تستهلك.',price_sub:'بدون اشتراك. ادفع مرة واستخدم رصيدك وقتما تشاء.',
+    pn1:'البداية',pn1_unit:'رصيد مجاني',pn1_per:'للأبد',pn1_d:'مثالي لاختبار كل شيء دون مخاطرة.',pn1_btn:'ابدأ مجانًا',
+    pn1_f1:'الوصول إلى 8 ميزات',pn1_f2:'دعم قياسي',pn1_f3:'لغة رئيسية واحدة',
+    popular:'الأكثر شيوعًا',pn2:'برو',pn2_unit:'رصيد',pn2_per:'≈ $0.15 / مهمة',pn2_save:'وفّر 25%',pn2_d:'للمحترفين والفرق الصغيرة التي تأتمت يوميًا.',pn2_btn:'شراء برو',
+    pn2_f1:'كل مزايا البداية',pn2_f2:'+ 100 لغة',pn2_f3:'دعم أولوية',pn2_f4:'تدفقات مخصصة',pn2_equiv:'≈ €27 · R$150 · £23 · ¥2,100',
+    pn3:'الأعمال',pn3_unit:'رصيد',pn3_per:'≈ $0.10 / مهمة',pn3_save:'وفّر 50%',pn3_d:'للفرق متوسطة الحجم التي تتوسع دون تعيينات جديدة.',pn3_btn:'شراء الأعمال',
+    pn3_f1:'كل مزايا برو',pn3_f2:'API كامل',pn3_f3:'5 مقاعد للفريق',pn3_f4:'SLA 99.9%',pn3_equiv:'≈ €93 · R$510 · £78 · ¥7,200',
+    pn4:'المؤسسات',pn4_unit:'رصيد مخصص',pn4_b:'مخصص',pn4_d:'حجم، تكاملات مخصصة، فريق مخصص وتدريب.',pn4_btn:'تحدّث مع المبيعات',
+    pn4_f1:'كل مزايا الأعمال',pn4_f2:'SSO و SAML',pn4_f3:'مدير حساب',pn4_f4:'on-premise اختياري',
+    uc_eyebrow:'حالات الاستخدام',uc_title:'مصمم للجميع. لكل شيء.',uc_sub:'بدّل التبويبات لترى كيف يحلّ AetherFlow تحديك القادم.',
+    uct_free:'المستقلون',uct_emp:'رواد الأعمال',uct_agc:'الوكالات',uct_edu:'التعليم',uct_ec:'التجارة الإلكترونية',
+    ucc1_t:'مستقلون يتوسعون دون تعيين',ucc1_p:'وفّر 10 ساعات أسبوعيًا بأتمتة البريد والعروض والتقارير.',
+    ucc1_l1:'عروض مخصصة خلال 60 ثانية',ucc1_l2:'تأهيل تلقائي للعملاء',ucc1_l3:'فواتير ومتابعة',ucc1_l4:'تقارير أسبوعية تلقائية',
+    ucc2_t:'رواد أعمال يطلقون بسرعة',ucc2_p:'أطلق الإصدارات الأولية وتحقق من الأفكار بدون فريق تقني.',
+    ucc2_l1:'بحث سوق فوري',ucc2_l2:'نصوص صفحات الهبوط بـ 8 لغات',ucc2_l3:'دعم 24/7',ucc2_l4:'تحليل المنافسين أسبوعيًا',
+    ucc3_t:'وكالات تسلّم أكثر وتفوتر أكثر',ucc3_p:'ضاعف القدرة على التسليم دون توسيع الفريق.',
+    ucc3_l1:'ملخصات إبداعية تلقائية',ucc3_l2:'تقارير لعدة عملاء',ucc3_l3:'ترجمة الحملات بشكل متزامن',ucc3_l4:'ضمان جودة واسع',
+    ucc4_t:'تعليم يصل لكل اللغات',ucc4_p:'محتوى تعليمي ودروس وتقييمات مخصصة لكل طالب.',
+    ucc4_l1:'خطط دراسية مخصصة',ucc4_l2:'ترجمة أكاديمية موثوقة',ucc4_l3:'توليد التمارين',ucc4_l4:'تغذية راجعة فورية',
+    ucc5_t:'تجارة إلكترونية تبيع في كل الأسواق',ucc5_p:'بع عالميًا بأوصاف ورسائل ودعم بلغة العميل.',
+    ucc5_l1:'أوصاف منتجات متعددة اللغات',ucc5_l2:'تسويق بالبريد محلي',ucc5_l3:'دعم عملاء تلقائي',ucc5_l4:'تحليل المراجعات والاتجاهات',
+    sec_eyebrow:'الأمان',sec_title:'ثقتك هي الأساس. الأمان هو دعمنا.',
+    sec1_t:'تشفير من طرف لطرف',sec1_d:'AES-256 للتخزين، TLS 1.3 للنقل.',
+    sec2_t:'مدفوعات معتمدة PCI DSS',sec2_d:'Stripe، Mercado Pago، PayPal، Pix و Apple Pay.',
+    sec3_t:'بنية تحتية عالمية',sec3_d:'خوادم في 6 مناطق: زمن استجابة منخفض وامتثال إقليمي.',
+    faq_eyebrow:'الأسئلة الشائعة',faq_title:'إجابات لأسئلتك',
+    q1:'كيف يعمل الرصيد؟',a1:'كل مهمة نموذجية تستهلك رصيدًا واحدًا. السعر الدقيق يظهر قبل التنفيذ.',
+    q2:'هل يمكنني استخدامه بلغتي؟',a2:'نعم. الواجهة بـ 8 لغات والذكاء يفهم +100.',
+    q3:'ما وسائل الدفع المقبولة؟',a3:'بطاقات، Apple Pay، Google Pay، PayPal، Mercado Pago، Pix، SPEI، SEPA، Bizum.',
+    q4:'هل بياناتي آمنة؟',a4:'نعم. AES-256، GDPR/SOC2، لا نستخدم بياناتك لتدريب النموذج.',
+    q5:'هل يوجد استرداد؟',a5:'نعم، 30 يومًا بدون أسئلة.',
+    final_h:'اشحن الرصيد خلال 60 ثانية.<br>أتمت بقية حياتك.',final_p:'بدون بطاقة لبدء. 5 رصيد مجاني للأبد.',final_cta:'اشترِ رصيدًا →',
+    foot_brand:'أتمتة عالمية بالذكاء الاصطناعي. ادفع عند الاستخدام، متميزة وآمنة، بأي لغة.',
+    foot_p:'المنتج',foot_p1:'الميزات',foot_p2:'الأسعار',foot_p3:'API',foot_p4:'حالة الخدمة',
+    foot_co:'الشركة',foot_co1:'من نحن',foot_co2:'المدونة',foot_co3:'الوظائف',foot_co4:'اتصل بنا',
+    foot_l:'قانوني',foot_l1:'الشروط',foot_l2:'الخصوصية',foot_l3:'الكوكيز',foot_l4:'الأمان',
+    foot_copy:'© 2025 AetherFlow · مصنوع بالذكاء الاصطناعي للعالم · v1.0',
+    modal_title:'اختيار ممتاز!',modal_body:'أنت على بُعد خطوة من الأتمتة المتميزة. عرض: في الإنتاج يفتح هذا الزر Stripe Checkout بأمان.',
+    modal_primary:'الذهاب للدفع',modal_secondary:'تابع الاستكشاف',
+  }
+};
+
+/* ===== Apply language ===== */
+function applyLang(lang){
+  const dict = I18N[lang] || I18N.es;
+  document.documentElement.lang = lang;
+  document.documentElement.setAttribute('data-lang', lang);
+  // RTL for Arabic
+  const rtl = (lang === 'ar');
+  document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+  // Translate all elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (dict[k] !== undefined){
+      if (el.tagName === 'INPUT') el.placeholder = dict[k];
+      else el.innerHTML = dict[k];
+    }
+  });
+  // Update active state in menu
+  document.querySelectorAll('#langMenu button').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  // Update language label
+  const label = {es:'ES',en:'EN',pt:'PT',fr:'FR',de:'DE',zh:'ZH',ja:'JA',ar:'AR'}[lang] || 'ES';
+  const labelEl = document.getElementById('langLabel');
+  if (labelEl) labelEl.textContent = label;
+  try { localStorage.setItem('aether_lang', lang); } catch(e){}
+}
+function detectLang(){
+  try{
+    const saved = localStorage.getItem('aether_lang');
+    if (saved && I18N[saved]) return saved;
+  }catch(e){}
+  const nav = (navigator.language || 'es').slice(0,2).toLowerCase();
+  return I18N[nav] ? nav : 'es';
+}
+
+/* ===== Lang switcher ===== */
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+langBtn?.addEventListener('click', e => {
+  e.stopPropagation();
+  langMenu?.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if (!langMenu?.contains(e.target) && e.target !== langBtn) langMenu?.classList.remove('open');
+});
+document.querySelectorAll('#langMenu button').forEach(b => {
+  b.addEventListener('click', () => {
+    applyLang(b.getAttribute('data-lang'));
+    langMenu.classList.remove('open');
+  });
+});
+
+/* ===== Use-case tabs ===== */
+document.querySelectorAll('#ucTabs .tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('#ucTabs .tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const target = t.getAttribute('data-uc');
+    document.querySelectorAll('[data-uc-panel]').forEach(p => {
+      p.style.display = (p.getAttribute('data-uc-panel') === target) ? '' : 'none';
+    });
+  });
+});
+
+/* ===== FAQ ===== */
+document.querySelectorAll('.faq').forEach(f => {
+  f.addEventListener('click', () => f.classList.toggle('open'));
+});
+
+/* ===== Pricing / checkout modal ===== */
+const TOAST = document.getElementById('toast');
+function toast(msg, type='info'){
+  TOAST.textContent = msg;
+  TOAST.className = 'toast show ' + type;
+  clearTimeout(TOAST._t);
+  TOAST._t = setTimeout(() => TOAST.classList.remove('show'), 3500);
+}
+const MBG = document.getElementById('modalBg');
+const MT  = document.getElementById('modalTitle');
+const MB  = document.getElementById('modalBody');
+document.getElementById('modalClose').addEventListener('click', () => MBG.classList.remove('open'));
+document.getElementById('modalSecondary').addEventListener('click', () => MBG.classList.remove('open'));
+document.getElementById('modalPrimary').addEventListener('click', () => {
+  toast('In production this opens Stripe Checkout. Demo mode.', 'info');
+  MBG.classList.remove('open');
+});
+MBG.addEventListener('click', e => { if (e.target === MBG) MBG.classList.remove('open'); });
+
+const PLAN_TEXT = {
+  free: { es:'Vamos allá — 5 créditos gratis, sin tarjeta.', en:"Let's go — 5 free credits, no card.", pt:'Vamos lá — 5 créditos grátis, sem cartão.', fr:'On y va — 5 crédits gratuits, sans carte.', de:'Los geht’s — 5 Gratis-Credits, ohne Karte.', zh:'开始 — 5 免费积分,无需信用卡。', ja:'さあ始めましょう — 5 無料クレジット,クレカ不要。', ar:'هيّا نبدأ — 5 رصيد مجاني,بدون بطاقة.' },
+  pro:  { es:'Pro: 200 créditos · $29 USD (≈ €27 / R$150).', en:'Pro: 200 credits · $29 USD (≈ €27 / R$150).', pt:'Pro: 200 créditos · $29 USD (≈ €27 / R$150).', fr:'Pro : 200 crédits · $29 USD (≈ €27 / R$150).', de:'Pro: 200 Credits · $29 USD (≈ €27 / R$150).', zh:'专业版:200 积分 · $29 USD(≈ €27 / R$150)。', ja:'プロ:200 クレジット · $29 USD (≈ €27 / R$150)。', ar:'برو: 200 رصيد · $29 (≈ €27 / R$150).' },
+  biz:  { es:'Business: 1.000 créditos · $99 USD.', en:'Business: 1,000 credits · $99 USD.', pt:'Business: 1.000 créditos · $99 USD.', fr:'Business : 1 000 crédits · $99 USD.', de:'Business: 1.000 Credits · $99 USD.', zh:'商业版:1,000 积分 · $99 USD。', ja:'ビジネス:1,000 クレジット · $99 USD。', ar:'الأعمال: 1,000 رصيد · $99.' },
+  ent:  { es:'Enterprise: contacte a ventas para un plan a medida.', en:'Enterprise: contact sales for a tailored plan.', pt:'Enterprise: contate vendas para um plano sob medida.', fr:'Enterprise : contactez le commercial.', de:'Enterprise: Vertrieb für individuellen Plan kontaktieren.', zh:'企业版:联系销售获取定制方案。', ja:'エンタープライズ:営業に連絡してカスタマイズ。', ar:'المؤسسات: تواصل مع المبيعات لخطة مخصصة.' }
+};
+
+document.querySelectorAll('.start-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    const p = b.getAttribute('data-plan');
+    const lang = document.documentElement.getAttribute('data-lang') || 'es';
+    const msg = (PLAN_TEXT[p] && PLAN_TEXT[p][lang]) || PLAN_TEXT[p].es;
+    MT.textContent = (lang === 'es') ? '¡Excelente elección!'
+                  : (lang === 'en') ? 'Excellent choice!'
+                  : (lang === 'pt') ? 'Ótima escolha!'
+                  : (lang === 'fr') ? 'Excellent choix !'
+                  : (lang === 'de') ? 'Ausgezeichnete Wahl!'
+                  : (lang === 'zh') ? '极好的选择!'
+                  : (lang === 'ja') ? '素晴らしい選択!'
+                  : 'اختيار ممتاز!';
+    MB.textContent = msg + '  ' + I18N[lang].modal_body;
+    MBG.classList.add('open');
+  });
+});
+
+/* ===== Smooth scroll ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id.length > 1){
+      const target = document.querySelector(id);
+      if (target){
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+  });
+});
+
+/* ===== Fade-in on scroll ===== */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting){
+      en.target.classList.add('visible');
+      io.unobserve(en.target);
+    }
+  });
+}, {threshold: 0.15});
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+/* ===== Init ===== */
+applyLang(detectLang());
+</script>
+</body>
+</html>
