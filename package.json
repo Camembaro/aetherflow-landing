@@ -1,5 +1,6 @@
 {
-  "name": "aetherflow", "version": "1.0.0", "private": true,
+  "name": "aetherflow", "version": "1.0.0", "private": true,"packageManager": "npm@latest",
+
   "scripts": { "dev": "next dev --turbopack", "build": "next build", "start": "next start" },
   "dependencies": {
     "@supabase/ssr": "^0.5.2", "@supabase/supabase-js": "^2.46.1", "next": "15.0.3",
