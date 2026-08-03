@@ -1,14 +1,3 @@
-node_modules
-.env*
-!.env.example
-.eve
+node_modules/ .next/ out/ build/ .env .env.local .env*.local .DS_Store *.log .vercel
 .vercel
-.workflow-data
-.next
-next-env.d.ts
-.output
-.nitro
-dist
-.DS_Store
-*.tsbuildinfo
-.env*.local
+.env*
