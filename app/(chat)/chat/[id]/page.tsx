@@ -1,16 +1,17 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { AgentChatRouteSync } from "@/app/_components/agent-chat-route-sync";
-import { SessionChatPage } from "@/app/_components/session-chat-page";
-import { isProvisionalChatId } from "@/lib/chat/provisional-chat";
+import { AgentChatRouteSync } from "@/app/_components/AgentChatRouteSync";
+import { SessionChatPage } from "@/app/_components/SessionChatPage";
+import { isProvisionalChatId } from "@/lib/chat-id";
 import { getChatForUser } from "@/lib/db/queries";
 import { getServerViewer } from "@/lib/session";
 import { getSetupStatus } from "@/lib/setup";
+import { ExistingChat } from "@/app/_components/ExistingChat";
 
 export default async function ChatPage({
   params,
 }: {
-  readonly params: Promise<{ readonly id: string }>;
+  readonly params: Promise<{ readonly id: string }>
 }) {
   const { id: chatId } = await params;
 
@@ -21,25 +22,4 @@ export default async function ChatPage({
       </Suspense>
     </SessionChatPage>
   );
-}
-
-async function ExistingChat({
-  chatId,
-}: {
-  readonly chatId: string;
-}) {
-  if (isProvisionalChatId(chatId)) {
-    return <AgentChatRouteSync activeChat={null} chatId={chatId} />;
-  }
-
-  const setupStatus = await getSetupStatus();
-  const viewer = await getServerViewer(setupStatus);
-  const appReady = setupStatus.appReady;
-  const activeChat = viewer && appReady ? await getChatForUser(chatId, viewer.id) : null;
-
-  if (viewer && appReady && !activeChat) {
-    notFound();
-  }
-
-  return <AgentChatRouteSync activeChat={activeChat} chatId={chatId} />;
 }
