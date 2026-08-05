@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
-import { withEve } from "eve/next";
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  turbopack: {
-    root: process.cwd(),
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "**.supabase.co" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+    ],
   },
 };
 
-export default withEve(nextConfig);
+export default nextConfig;

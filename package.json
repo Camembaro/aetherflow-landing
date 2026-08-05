@@ -1,5 +1,6 @@
 {
-  "name": "aetherflow", "version": "1.0.0", "private": true,"packageManager": "npm@latest",
+  "name": "aetherflow", "version": "1.0.0","packageManager": "npm@10.8.2",
+ "private": true,"packageManager": "npm@latest",
 
   "scripts": { "dev": "next dev --turbopack", "build": "next build", "start": "next start" },
   "dependencies": {
